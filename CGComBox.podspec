@@ -3,7 +3,7 @@
 Pod::Spec.new do |s|
 
   s.name         = "CGComBox"
-  s.version      = "1.0.1"
+  s.version      = "1.0.2"
   s.ios.deployment_target = '7.0'
   s.summary            = "一个下拉多选的自定义控件CGComBox"
   s.homepage           = "https://github.com/y1503/CGComBox-github"
@@ -11,7 +11,7 @@ Pod::Spec.new do |s|
   s.author             = { "鱼鱼" => "y1503@126.com" }
   s.social_media_url   = "http://weibo.com/u/3271812005"
 
-  s.platform           = :ios, 8.0"
+  s.platform           = :ios, '8.0'
 
   s.source             = { :git => "https://github.com/y1503/CGComBox-github.git", :tag => s.version }
 
@@ -24,5 +24,4 @@ Pod::Spec.new do |s|
   s.requires_arc       = true
 
   s.dependency "Masonry", "~> 1.0.2"
-
 end
