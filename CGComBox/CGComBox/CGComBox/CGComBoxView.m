@@ -101,6 +101,7 @@ static NSString *cellIndentifier = @"cellIndentifier";
         _listTable.layer.borderColor = kTextColor.CGColor;
         [_listTable registerClass:[UITableViewCell class] forCellReuseIdentifier:cellIndentifier];
         _isTouchOutsideHide = YES;
+        self.moreLines = NO;
     }
     return self;
 }

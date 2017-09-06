@@ -40,7 +40,7 @@ typedef enum : NSUInteger {
 @property (nonatomic, strong) UIColor *borderColor;
 @property (nonatomic, assign) BOOL hideArrow;//默认NO不隐藏
 @property (nonatomic, assign) BOOL isTouchOutsideHide; //点击控件外面 是否隐藏, 默认YES 隐藏
-@property (nonatomic, assign) BOOL moreLines;//当这个属性为yes时，titleTV会被显示出来，titleTextField会被隐藏，反之亦然
+@property (nonatomic, assign) BOOL moreLines;//默认NO，当这个属性为YES时，titleTV会被显示出来，titleTextField会被隐藏，反之亦然
 //- (void)reloadData;
 //- (void)closeOtherCombox;
 - (void)tapAction;
