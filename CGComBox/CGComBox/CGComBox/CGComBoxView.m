@@ -47,11 +47,25 @@ static NSString *cellIndentifier = @"cellIndentifier";
         _titleTextField.delegate = self;
         _titleTextField.returnKeyType = UIReturnKeyDone;
         _titleTextField.textColor = kTextColor;
+        
+        //初始化textfiled
+        _titleTV = [[UITextView alloc] init];
+        _titleTV.font = [UIFont systemFontOfSize:14];
+        _titleTV.backgroundColor = [UIColor clearColor];
+        _titleTV.textAlignment = NSTextAlignmentLeft;
+        _titleTV.delegate = self;
+        _titleTV.returnKeyType = UIReturnKeyDone;
+        _titleTV.textColor = kTextColor;
+        
+        
         if (_isSearch == NO) {
             _titleTextField.userInteractionEnabled = NO;
+            _titleTV.userInteractionEnabled = NO;
         }
         [_titleTextField addTarget:self action:@selector(editChange:) forControlEvents:UIControlEventEditingChanged];
         [_btn addSubview:_titleTextField];
+        
+        [_btn addSubview:_titleTV];
         
         _arrow = [[UIImageView alloc] init];
         _arrow.image = [UIImage imageNamed:@"xiala_big.png"];
@@ -64,6 +78,9 @@ static NSString *cellIndentifier = @"cellIndentifier";
             make.bottom.mas_equalTo(_btn).offset(0);
         }];
         
+        [_titleTV mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.edges.mas_equalTo(self.titleTextField).insets(UIEdgeInsetsMake(0, 0, 0, 0));
+        }];
         
         [_arrow mas_makeConstraints:^(MASConstraintMaker *make) {
             make.right.mas_equalTo(_btn).offset(0);
@@ -119,6 +136,7 @@ static NSString *cellIndentifier = @"cellIndentifier";
     _titlesList = titlesList;
     if (_titlesList.count > _defaultIndex) {
         _titleTextField.text = [_titlesList objectAtIndex:_defaultIndex];
+        _titleTV.text = [_titlesList objectAtIndex:_defaultIndex];
     }
     if (_defaultTitle) {
         self.defaultTitle = _defaultTitle;
@@ -144,6 +162,7 @@ static NSString *cellIndentifier = @"cellIndentifier";
     _currentIndex = defaultIndex;
     if (_titlesList.count > _defaultIndex) {
         _titleTextField.text = [_titlesList objectAtIndex:_defaultIndex];
+        _titleTV.text = [_titlesList objectAtIndex:_defaultIndex];
         if([_delegate respondsToSelector:@selector(selectAtIndex:inCombox:)])
         {
             [_delegate selectAtIndex:_currentIndex inCombox:self];
@@ -152,6 +171,7 @@ static NSString *cellIndentifier = @"cellIndentifier";
     }
     else if (_defaultTitle) {
         _titleTextField.text = _defaultTitle;
+        _titleTV.text = _defaultTitle;
     }
 }
 
@@ -163,6 +183,7 @@ static NSString *cellIndentifier = @"cellIndentifier";
     
     _defaultTitle = defaultTitle;
     _titleTextField.text = defaultTitle;
+    _titleTV.text = defaultTitle;
     if (_defaultTitle != defaultTitle) {
         _defaultTitle = [defaultTitle copy];
     }
@@ -202,6 +223,7 @@ static NSString *cellIndentifier = @"cellIndentifier";
         _isOpen = NO;
         self.coverView.hidden = YES;
         [_titleTextField resignFirstResponder];
+        [_titleTV resignFirstResponder];
         [UIView animateWithDuration:0.3 animations:^{
             CGRect rect = _listTable.frame;
             if (self.isDown) {
@@ -423,16 +445,24 @@ static NSString *cellIndentifier = @"cellIndentifier";
 {
     _isSearch = isSearch;
     _titleTextField.userInteractionEnabled = isSearch;
+    _titleTV.userInteractionEnabled = isSearch;
 }
 
+
+#pragma mark - UITextFieldDelegate
 - (BOOL)textFieldShouldReturn:(UITextField *)textField
 {
     [textField resignFirstResponder];
     return YES;
 }
 
-
 - (void)editChange:(UITextField *)textField
+{
+    [self change:textField.text];
+}
+
+#pragma mark -- 中间方法，便于调用
+- (void)change:(NSString *)tempStr
 {
     if (self.isOpen == NO) {
         [self tapAction];
@@ -441,7 +471,6 @@ static NSString *cellIndentifier = @"cellIndentifier";
     
     NSInteger lastCount = cellIndexs.count;
     
-    NSString *tempStr = textField.text;
     [cellIndexs removeAllObjects];
     NSInteger count = _titlesList.count;
     for (int i = 0; i < count; i++ ) {
@@ -466,6 +495,21 @@ static NSString *cellIndentifier = @"cellIndentifier";
     
     
     [_listTable reloadData];
+}
+
+#pragma mark - UITextViewDelegate
+- (void)textViewDidChange:(UITextView *)textView
+{
+    [self change:textView.text];
+}
+
+- (BOOL)textView:(UITextView *)textView shouldChangeTextInRange:(NSRange)range replacementText:(NSString *)text
+{
+    if ([text isEqualToString:@"\n"]) {
+        [textView resignFirstResponder];
+        return NO;
+    }
+    return YES;
 }
 
 #pragma mark -- 调整tableview的高度
@@ -524,6 +568,13 @@ static NSString *cellIndentifier = @"cellIndentifier";
     }
     _arrow.hidden = hideArrow;
     
+}
+
+- (void)setMoreLines:(BOOL)moreLines
+{
+    _moreLines = moreLines;
+    self.titleTextField.hidden = moreLines;
+    self.titleTV.hidden = !moreLines;
 }
 
 - (void)dealloc

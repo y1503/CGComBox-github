@@ -18,7 +18,8 @@
 		D92059B71EC843D30041F250 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D92059B51EC843D30041F250 /* LaunchScreen.storyboard */; };
 		D92059C21EC843D30041F250 /* CGComBoxTests.m in Sources */ = {isa = PBXBuildFile; fileRef = D92059C11EC843D30041F250 /* CGComBoxTests.m */; };
 		D92059CD1EC843D30041F250 /* CGComBoxUITests.m in Sources */ = {isa = PBXBuildFile; fileRef = D92059CC1EC843D30041F250 /* CGComBoxUITests.m */; };
-		D92059DB1EC848B60041F250 /* CGComBox in Resources */ = {isa = PBXBuildFile; fileRef = D92059DA1EC848B60041F250 /* CGComBox */; };
+		D9E46DA21F5FEBBB002F52F7 /* CGComBoxView.m in Sources */ = {isa = PBXBuildFile; fileRef = D9E46DA01F5FEBBB002F52F7 /* CGComBoxView.m */; };
+		D9E46DA31F5FEBBB002F52F7 /* xiala_big.png in Resources */ = {isa = PBXBuildFile; fileRef = D9E46DA11F5FEBBB002F52F7 /* xiala_big.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -64,7 +65,9 @@
 		D92059C81EC843D30041F250 /* CGComBoxUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = CGComBoxUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		D92059CC1EC843D30041F250 /* CGComBoxUITests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CGComBoxUITests.m; sourceTree = "<group>"; };
 		D92059CE1EC843D30041F250 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		D92059DA1EC848B60041F250 /* CGComBox */ = {isa = PBXFileReference; lastKnownFileType = folder; path = CGComBox; sourceTree = "<group>"; };
+		D9E46D9F1F5FEBBB002F52F7 /* CGComBoxView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CGComBoxView.h; sourceTree = "<group>"; };
+		D9E46DA01F5FEBBB002F52F7 /* CGComBoxView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CGComBoxView.m; sourceTree = "<group>"; };
+		D9E46DA11F5FEBBB002F52F7 /* xiala_big.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = xiala_big.png; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -143,7 +146,7 @@
 		D92059A61EC843D30041F250 /* CGComBox */ = {
 			isa = PBXGroup;
 			children = (
-				D92059DA1EC848B60041F250 /* CGComBox */,
+				D9E46D9E1F5FEBBB002F52F7 /* CGComBox */,
 				D92059AA1EC843D30041F250 /* AppDelegate.h */,
 				D92059AB1EC843D30041F250 /* AppDelegate.m */,
 				D92059AD1EC843D30041F250 /* ViewController.h */,
@@ -181,6 +184,16 @@
 				D92059CE1EC843D30041F250 /* Info.plist */,
 			);
 			path = CGComBoxUITests;
+			sourceTree = "<group>";
+		};
+		D9E46D9E1F5FEBBB002F52F7 /* CGComBox */ = {
+			isa = PBXGroup;
+			children = (
+				D9E46D9F1F5FEBBB002F52F7 /* CGComBoxView.h */,
+				D9E46DA01F5FEBBB002F52F7 /* CGComBoxView.m */,
+				D9E46DA11F5FEBBB002F52F7 /* xiala_big.png */,
+			);
+			path = CGComBox;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -301,9 +314,9 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D9E46DA31F5FEBBB002F52F7 /* xiala_big.png in Resources */,
 				D92059B71EC843D30041F250 /* LaunchScreen.storyboard in Resources */,
 				D92059B41EC843D30041F250 /* Assets.xcassets in Resources */,
-				D92059DB1EC848B60041F250 /* CGComBox in Resources */,
 				D92059B21EC843D30041F250 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -469,6 +482,7 @@
 			files = (
 				D92059AF1EC843D30041F250 /* ViewController.m in Sources */,
 				D92059AC1EC843D30041F250 /* AppDelegate.m in Sources */,
+				D9E46DA21F5FEBBB002F52F7 /* CGComBoxView.m in Sources */,
 				D92059A91EC843D30041F250 /* main.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

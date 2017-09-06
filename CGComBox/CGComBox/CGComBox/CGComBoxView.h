@@ -18,7 +18,7 @@ typedef enum : NSUInteger {
 
 @end
 
-@interface CGComBoxView : UIView<UITableViewDataSource,UITableViewDelegate,UITextFieldDelegate>
+@interface CGComBoxView : UIView<UITableViewDataSource,UITableViewDelegate,UITextFieldDelegate,UITextViewDelegate>
 {
     NSMutableArray *cellIndexs;
     CGRect defaultFrame;
@@ -36,9 +36,11 @@ typedef enum : NSUInteger {
 @property (nonatomic, assign) BOOL isDown;//YES 下 NO 上,默认yes
 @property (nonatomic, assign) BOOL isSearch;// 默认的不可以搜索
 @property (nonatomic,strong,readonly) UITextField *titleTextField;
+@property (nonatomic, strong, readonly) UITextView *titleTV;
 @property (nonatomic, strong) UIColor *borderColor;
 @property (nonatomic, assign) BOOL hideArrow;//默认NO不隐藏
 @property (nonatomic, assign) BOOL isTouchOutsideHide; //点击控件外面 是否隐藏, 默认YES 隐藏
+@property (nonatomic, assign) BOOL moreLines;//当这个属性为yes时，titleTV会被显示出来，titleTextField会被隐藏，反之亦然
 //- (void)reloadData;
 //- (void)closeOtherCombox;
 - (void)tapAction;
