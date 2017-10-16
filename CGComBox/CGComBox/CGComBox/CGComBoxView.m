@@ -249,13 +249,14 @@ static NSString *cellIndentifier = @"cellIndentifier";
     {
         [[NSNotificationCenter defaultCenter] postNotificationName:CGComBoxView_Notification object:self];
 
-        _isOpen = YES;
+        
         self.coverView.hidden = NO;
         if ([_delegate respondsToSelector:@selector(willClickAction:)]) {
             if (![_delegate willClickAction:self]) {
                 return;
             }
         }
+        _isOpen = YES;
         
         CGRect rect = [_supView convertRect:self.frame fromView:self];
         //去除在原来坐标系中的偏移
