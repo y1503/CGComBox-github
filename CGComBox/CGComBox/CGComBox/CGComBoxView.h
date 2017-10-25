@@ -31,7 +31,7 @@ typedef enum : NSUInteger {
 @property (nonatomic,assign,readonly) NSInteger currentIndex;
 @property (nonatomic, copy) NSString *defaultTitle;//默认是defaultIndex对应的值
 @property (nonatomic,strong,readonly) UIImageView *arrow;
-@property (nonatomic,assign) id<CGComBoxViewDelegate>delegate;
+@property (nonatomic, weak) id<CGComBoxViewDelegate>delegate;
 @property (nonatomic,weak) UIView *supView;
 @property (nonatomic, assign) BOOL isDown;//YES 下 NO 上,默认yes
 @property (nonatomic, assign) BOOL isSearch;// 默认的不可以搜索
