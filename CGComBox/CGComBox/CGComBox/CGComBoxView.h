@@ -5,7 +5,7 @@
 @protocol CGComBoxViewDelegate <NSObject>
 
 @required
--(NSInteger)numberOfRows;//个数
+-(NSInteger)numberOfRowsInCombox:(CGComBoxView *)combox;//个数
 -(NSString *)combox:(CGComBoxView *)combox titleOfRowAtIndex:(NSInteger)index;//每条显示的内容
 
 @optional

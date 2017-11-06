@@ -28,7 +28,7 @@
 }
 
 
-- (NSInteger)numberOfRows
+- (NSInteger)numberOfRowsInCombox:(CGComBoxView *)combox
 {
     return self.datas.count;
 }

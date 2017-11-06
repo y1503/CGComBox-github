@@ -121,8 +121,8 @@ static NSString *cellIndentifier = @"cellIndentifier";
 #pragma mark -- 列表显示的总个数
 - (NSInteger)rows
 {
-    if ([self.delegate respondsToSelector:@selector(numberOfRows)]) {
-        return [self.delegate numberOfRows];
+    if ([self.delegate respondsToSelector:@selector(numberOfRowsInCombox:)]) {
+        return [self.delegate numberOfRowsInCombox:self];
     }
     return 0;
 }
