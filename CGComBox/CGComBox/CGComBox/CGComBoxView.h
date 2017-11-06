@@ -1,11 +1,6 @@
 
 #import <UIKit/UIKit.h>
 
-typedef enum : NSUInteger {
-    CGComBoxViewTypeWithDeleteBtn,
-    CGComBoxViewTypeWithOutDeleteBtn,
-} CGComBoxViewType;
-
 @class CGComBoxView;
 @protocol CGComBoxViewDelegate <NSObject>
 
