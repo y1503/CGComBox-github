@@ -49,7 +49,7 @@ static NSString *cellIndentifier = @"cellIndentifier";
         _textView.delegate = self;
         _textView.returnKeyType = UIReturnKeyDone;
         _textView.textColor = kTextColor;
-        _textView.userInteractionEnabled = NO;
+        self.isSearch = NO;
         
         [_btn addSubview:_textView];
         
@@ -286,9 +286,7 @@ static NSString *cellIndentifier = @"cellIndentifier";
         cell.textLabel.text = [self.delegate combox:self titleOfRowAtIndex:indexPath.row];
     }
     
-    cell.showDeleteBtn = [self.delegate respondsToSelector:@selector(deleteAtIndex:inCombox:)];
-    
-    self.textView.userInteractionEnabled = [self.delegate respondsToSelector:@selector(combox:searchText:)];
+    cell.showDeleteBtn = self.isDelete;
     
     return cell;
 }
@@ -393,6 +391,12 @@ static NSString *cellIndentifier = @"cellIndentifier";
     }
     _arrow.hidden = hideArrow;
     
+}
+
+- (void)setIsSearch:(BOOL)isSearch
+{
+    _isSearch = isSearch;
+    self.textView.userInteractionEnabled = isSearch;
 }
 
 - (void)reloadData
