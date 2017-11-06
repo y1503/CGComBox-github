@@ -9,13 +9,15 @@
 -(NSString *)combox:(CGComBoxView *)combox titleOfRowAtIndex:(NSInteger)index;//每条显示的内容
 
 @optional
--(void)selectAtIndex:(NSInteger)index inCombox:(CGComBoxView *)combox;
+//选中了一行
 -(void)combox:(CGComBoxView *)combox didSelectRowAtIndex:(NSInteger)index;
-
-- (BOOL)willClickAction:(CGComBoxView *)combox;
-
+//将要展开
+- (BOOL)comboxWillUnfold:(CGComBoxView *)combox;
+//删除一行，只有该方法被实现，才会出现删除按钮
 -(void)deleteAtIndex:(NSInteger)index inCombox:(CGComBoxView *)combox;
+//展开后，每一行显示的高度
 -(CGFloat)combox:(CGComBoxView *)combox heightForRowAtIndex:(NSInteger)index;//默认combox自身的高度
+//输入框内的字符正在变化，可以用做搜索，只有该方法被实现，才允许输入
 -(void)combox:(CGComBoxView *)combox searchText:(NSString *)searchText;
 @end
 

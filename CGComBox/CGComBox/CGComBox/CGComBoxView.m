@@ -165,8 +165,8 @@ static NSString *cellIndentifier = @"cellIndentifier";
 
         
         self.coverView.hidden = NO;
-        if ([_delegate respondsToSelector:@selector(willClickAction:)]) {
-            if (![_delegate willClickAction:self]) {
+        if ([_delegate respondsToSelector:@selector(comboxWillUnfold:)]) {
+            if (![_delegate comboxWillUnfold:self]) {
                 return;
             }
         }
