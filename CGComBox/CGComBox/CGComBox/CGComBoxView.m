@@ -395,6 +395,11 @@ static NSString *cellIndentifier = @"cellIndentifier";
     
 }
 
+- (void)reloadData
+{
+    [self.listTable reloadData];
+}
+
 - (void)dealloc
 {
     [[NSNotificationCenter defaultCenter] removeObserver:self name:CGComBoxView_Notification object:nil];

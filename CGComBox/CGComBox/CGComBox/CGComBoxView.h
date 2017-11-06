@@ -35,6 +35,7 @@
 @property (nonatomic, assign) BOOL hideArrow;//默认NO不隐藏
 @property (nonatomic, assign) BOOL isTouchOutsideHide; //点击控件外面 是否隐藏, 默认YES 隐藏
 
+- (void)reloadData;
 - (void)tapAction;
 - (void)closeCombox;
 
