@@ -9,45 +9,38 @@ typedef enum : NSUInteger {
 @class CGComBoxView;
 @protocol CGComBoxViewDelegate <NSObject>
 
+@required
+-(NSInteger)numberOfRows;//个数
+-(NSString *)combox:(CGComBoxView *)combox titleOfRowAtIndex:(NSInteger)index;//每条显示的内容
+
 @optional
 -(void)selectAtIndex:(NSInteger)index inCombox:(CGComBoxView *)combox;
+-(void)combox:(CGComBoxView *)combox didSelectRowAtIndex:(NSInteger)index;
 
 - (BOOL)willClickAction:(CGComBoxView *)combox;
 
 -(void)deleteAtIndex:(NSInteger)index inCombox:(CGComBoxView *)combox;
-
+-(CGFloat)combox:(CGComBoxView *)combox heightForRowAtIndex:(NSInteger)index;//默认combox自身的高度
+-(void)combox:(CGComBoxView *)combox searchText:(NSString *)searchText;
 @end
 
-@interface CGComBoxView : UIView<UITableViewDataSource,UITableViewDelegate,UITextFieldDelegate,UITextViewDelegate>
-{
-    NSMutableArray *cellIndexs;
-    CGRect defaultFrame;
-    UIButton *_btn;
-}
+@interface CGComBoxView : UIView<UITableViewDataSource,UITableViewDelegate,UITextViewDelegate>
+
 @property (nonatomic,assign, readonly) BOOL isOpen;
-@property (nonatomic,strong,readonly) UITableView *listTable;
-@property (nonatomic,strong) NSArray *titlesList;
-@property (nonatomic,assign) NSInteger defaultIndex;
-@property (nonatomic,assign,readonly) NSInteger currentIndex;
-@property (nonatomic, copy) NSString *defaultTitle;//默认是defaultIndex对应的值
+
+@property (nonatomic,assign) NSInteger currentIndex;
 @property (nonatomic,strong,readonly) UIImageView *arrow;
 @property (nonatomic, weak) id<CGComBoxViewDelegate>delegate;
 @property (nonatomic,weak) UIView *supView;
 @property (nonatomic, assign) BOOL isDown;//YES 下 NO 上,默认yes
-@property (nonatomic, assign) BOOL isSearch;// 默认的不可以搜索
-@property (nonatomic,strong,readonly) UITextField *titleTextField;
-@property (nonatomic, strong, readonly) UITextView *titleTV;
+@property (nonatomic, strong, readonly) UITextView *textView;
 @property (nonatomic, strong) UIColor *borderColor;
 @property (nonatomic, assign) BOOL hideArrow;//默认NO不隐藏
 @property (nonatomic, assign) BOOL isTouchOutsideHide; //点击控件外面 是否隐藏, 默认YES 隐藏
-@property (nonatomic, assign) BOOL moreLines;//默认NO，当这个属性为YES时，titleTV会被显示出来，titleTextField会被隐藏，反之亦然
-//- (void)reloadData;
-//- (void)closeOtherCombox;
+
 - (void)tapAction;
 - (void)closeCombox;
-- (void)setTExtPlacehold:(NSString *)placeholdString;
 
-@property(nonatomic, assign) CGComBoxViewType type;
 
 @end
 

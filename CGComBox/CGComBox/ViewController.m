@@ -9,29 +9,44 @@
 #import "ViewController.h"
 #import "CGComBoxView.h"
 
-@interface ViewController ()
-
+@interface ViewController ()<CGComBoxViewDelegate>
+@property (nonatomic, strong) NSMutableArray *datas;
 @end
 
 @implementation ViewController
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    // Do any additional setup after loading the view, typically from a nib.
     
+    self.datas = [NSMutableArray arrayWithObjects:@"1234567890123456789012345678901234566666", @"2", nil];
     
     CGComBoxView *combox = [[CGComBoxView alloc] initWithFrame:CGRectMake(10, 100, 200, 40)];
-    combox.titlesList = @[@"123456789012345678901234567890", @"2"];
     combox.supView = self.view;
-    combox.moreLines = YES;
+    combox.delegate = self;
+    combox.currentIndex = 0;
     [self.view addSubview:combox];
 }
 
 
-- (void)didReceiveMemoryWarning {
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
+- (NSInteger)numberOfRows
+{
+    return self.datas.count;
 }
 
+- (NSString *)combox:(CGComBoxView *)combox titleOfRowAtIndex:(NSInteger)index
+{
+    return self.datas[index];
+}
+
+-(CGFloat)combox:(CGComBoxView *)combox heightForRowAtIndex:(NSInteger)index
+{
+    return 44.0f;
+}
+
+- (void)combox:(CGComBoxView *)combox searchText:(NSString *)searchText
+{
+    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"SELF contains %@", searchText];
+    [self.datas filterUsingPredicate:predicate];
+}
 
 @end

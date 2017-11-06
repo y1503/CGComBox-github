@@ -18,6 +18,7 @@
 		D92059B71EC843D30041F250 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D92059B51EC843D30041F250 /* LaunchScreen.storyboard */; };
 		D92059C21EC843D30041F250 /* CGComBoxTests.m in Sources */ = {isa = PBXBuildFile; fileRef = D92059C11EC843D30041F250 /* CGComBoxTests.m */; };
 		D92059CD1EC843D30041F250 /* CGComBoxUITests.m in Sources */ = {isa = PBXBuildFile; fileRef = D92059CC1EC843D30041F250 /* CGComBoxUITests.m */; };
+		D9A4492D1FA72054004F1426 /* CGComBoxTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = D9A4492C1FA72054004F1426 /* CGComBoxTableViewCell.m */; };
 		D9E46DA21F5FEBBB002F52F7 /* CGComBoxView.m in Sources */ = {isa = PBXBuildFile; fileRef = D9E46DA01F5FEBBB002F52F7 /* CGComBoxView.m */; };
 		D9E46DA31F5FEBBB002F52F7 /* xiala_big.png in Resources */ = {isa = PBXBuildFile; fileRef = D9E46DA11F5FEBBB002F52F7 /* xiala_big.png */; };
 /* End PBXBuildFile section */
@@ -65,6 +66,8 @@
 		D92059C81EC843D30041F250 /* CGComBoxUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = CGComBoxUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		D92059CC1EC843D30041F250 /* CGComBoxUITests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CGComBoxUITests.m; sourceTree = "<group>"; };
 		D92059CE1EC843D30041F250 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		D9A4492B1FA72054004F1426 /* CGComBoxTableViewCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CGComBoxTableViewCell.h; sourceTree = "<group>"; };
+		D9A4492C1FA72054004F1426 /* CGComBoxTableViewCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CGComBoxTableViewCell.m; sourceTree = "<group>"; };
 		D9E46D9F1F5FEBBB002F52F7 /* CGComBoxView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CGComBoxView.h; sourceTree = "<group>"; };
 		D9E46DA01F5FEBBB002F52F7 /* CGComBoxView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CGComBoxView.m; sourceTree = "<group>"; };
 		D9E46DA11F5FEBBB002F52F7 /* xiala_big.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = xiala_big.png; sourceTree = "<group>"; };
@@ -192,6 +195,8 @@
 				D9E46D9F1F5FEBBB002F52F7 /* CGComBoxView.h */,
 				D9E46DA01F5FEBBB002F52F7 /* CGComBoxView.m */,
 				D9E46DA11F5FEBBB002F52F7 /* xiala_big.png */,
+				D9A4492B1FA72054004F1426 /* CGComBoxTableViewCell.h */,
+				D9A4492C1FA72054004F1426 /* CGComBoxTableViewCell.m */,
 			);
 			path = CGComBox;
 			sourceTree = "<group>";
@@ -481,6 +486,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				D92059AF1EC843D30041F250 /* ViewController.m in Sources */,
+				D9A4492D1FA72054004F1426 /* CGComBoxTableViewCell.m in Sources */,
 				D92059AC1EC843D30041F250 /* AppDelegate.m in Sources */,
 				D9E46DA21F5FEBBB002F52F7 /* CGComBoxView.m in Sources */,
 				D92059A91EC843D30041F250 /* main.m in Sources */,
