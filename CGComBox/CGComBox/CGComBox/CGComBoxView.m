@@ -17,6 +17,7 @@ static NSString *cellIndentifier = @"cellIndentifier";
 
 @property (nonatomic, strong) UIView *coverView; // 覆盖视图
 @property (nonatomic, strong) UITableView *listTable;
+@property (nonatomic, strong) UILabel *placeHolderLbl;
 @property (nonatomic, strong) NSArray *searchResultArr;//搜索用，不为空，就使用该数组显示数据
 @end
 
@@ -28,8 +29,6 @@ static NSString *cellIndentifier = @"cellIndentifier";
     if (self=[super initWithFrame:frame]) {
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(closeOhter:) name:CGComBoxView_Notification object:nil];
         
-        //设置默认值
-        self.isDown = YES;
         self.borderColor = kBorderColor;
         
         //初始化_btn
@@ -50,7 +49,25 @@ static NSString *cellIndentifier = @"cellIndentifier";
         _textView.delegate = self;
         _textView.returnKeyType = UIReturnKeyDone;
         _textView.textColor = kTextColor;
-        self.isSearch = NO;
+        
+        [_textView addObserver:self forKeyPath:@"text" options:NSKeyValueObservingOptionNew|NSKeyValueObservingOptionOld context:nil];
+        
+        _placeHolderLbl = [[UILabel alloc] init];
+        _placeHolderLbl.textColor = [UIColor lightGrayColor];
+        _placeHolderLbl.font = [UIFont systemFontOfSize:14];
+        _placeHolderLbl.textAlignment = NSTextAlignmentLeft;
+        _placeHolderLbl.numberOfLines = 0;
+        _placeHolderLbl.lineBreakMode = NSLineBreakByCharWrapping;
+        [_textView addSubview:_placeHolderLbl];
+        [self.placeHolderLbl mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.left.mas_equalTo(_textView).offset(10/2);
+            make.right.mas_equalTo(_textView).offset(-10/2);
+            make.top.mas_equalTo(_textView).offset(10/2);
+            make.bottom.mas_equalTo(_textView).offset(-10/2);
+            make.width.mas_lessThanOrEqualTo(_textView.mas_width).offset(-10);
+        }];
+        
+        
         
         [_btn addSubview:_textView];
         
@@ -60,9 +77,9 @@ static NSString *cellIndentifier = @"cellIndentifier";
         
         [_textView mas_makeConstraints:^(MASConstraintMaker *make) {
             make.left.mas_equalTo(_btn).offset(0);
-            make.top.mas_equalTo(_btn).offset(0);
             make.right.mas_equalTo(_arrow.mas_left).offset(0);
-            make.bottom.mas_equalTo(_btn).offset(0);
+            make.centerY.mas_equalTo(_btn.mas_centerY);
+            make.height.mas_equalTo(_btn.mas_height).offset(0);
         }];
         
         [_arrow mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -84,6 +101,13 @@ static NSString *cellIndentifier = @"cellIndentifier";
         _listTable.layer.borderColor = kTextColor.CGColor;
         [_listTable registerClass:[CGComBoxTableViewCell class] forCellReuseIdentifier:cellIndentifier];
         _isTouchOutsideHide = YES;
+        
+        
+        
+        //设置默认值
+        self.isDown = YES;
+        self.isSearch = NO;
+        self.isMoreLine = NO;
     }
     return self;
 }
@@ -271,14 +295,6 @@ static NSString *cellIndentifier = @"cellIndentifier";
 
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    if ([self.delegate respondsToSelector:@selector(combox:heightForRowAtIndex:)]) {
-        NSInteger index = indexPath.row;
-        if (self.searchResultArr) {
-            index = [self.searchResultArr[indexPath.row] integerValue];
-        }
-        return [self.delegate combox:self heightForRowAtIndex:index];
-    }
-    
     return self.frame.size.height;
 }
 
@@ -343,13 +359,34 @@ static NSString *cellIndentifier = @"cellIndentifier";
         if (self.searchResultArr.count == 0 && textView.text.length == 0) {
             self.searchResultArr = nil;
         }
-        
+
         if (!self.isOpen) {
             [self tapAction];
         }else{
             [self.listTable reloadData];
         }
     }
+
+    if (_textView.text.length == 0) {
+        self.placeHolderLbl.hidden = NO;
+    }else{
+        self.placeHolderLbl.hidden = YES;
+    }
+}
+
+- (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary<NSKeyValueChangeKey,id> *)change context:(void *)context
+{
+    if (_textView.text.length == 0) {
+        self.placeHolderLbl.hidden = NO;
+    }else{
+        self.placeHolderLbl.hidden = YES;
+    }
+}
+
+- (void)setPlaceHolder:(NSString *)placeHolder
+{
+    self.placeHolderLbl.text = placeHolder;
+    _placeHolder = placeHolder;
 }
 
 - (BOOL)textViewShouldBeginEditing:(UITextView *)textView
@@ -441,6 +478,18 @@ static NSString *cellIndentifier = @"cellIndentifier";
     self.textView.userInteractionEnabled = isSearch;
 }
 
+- (void)setIsMoreLine:(BOOL)isMoreLine
+{
+    [_textView mas_updateConstraints:^(MASConstraintMaker *make) {
+        if (isMoreLine) {
+            make.height.mas_equalTo(_btn.mas_height).offset(0);
+        }else{
+            make.height.mas_equalTo(@21);
+        }
+    }];
+    _isMoreLine = isMoreLine;
+}
+
 - (void)reloadData
 {
     [self.listTable reloadData];
@@ -449,6 +498,7 @@ static NSString *cellIndentifier = @"cellIndentifier";
 - (void)dealloc
 {
     [[NSNotificationCenter defaultCenter] removeObserver:self name:CGComBoxView_Notification object:nil];
+    [self removeObserver:self forKeyPath:@"text"];
 }
 
 @end

@@ -11,6 +11,7 @@
 
 @interface ViewController ()<CGComBoxViewDelegate>
 @property (nonatomic, strong) NSMutableArray *datas;
+@property (nonatomic, strong) CGComBoxView *combox;
 @end
 
 @implementation ViewController
@@ -18,14 +19,16 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    self.datas = [NSMutableArray arrayWithObjects:@"1234567890123456789012345678901234566666", @"2", nil];
+    self.datas = [NSMutableArray arrayWithObjects:@"123", @"2", nil];
     
-    CGComBoxView *combox = [[CGComBoxView alloc] initWithFrame:CGRectMake(10, 100, 200, 40)];
+    CGComBoxView *combox = [[CGComBoxView alloc] initWithFrame:CGRectMake(10, 100, 200, 30)];
     combox.supView = self.view;
     combox.delegate = self;
     combox.isDelete = YES;
     combox.currentIndex = 0;
     combox.isSearch = YES;
+    combox.placeHolder = @"测试了";
+    self.combox = combox;
     [self.view addSubview:combox];
 }
 
@@ -38,11 +41,6 @@
 - (NSString *)combox:(CGComBoxView *)combox titleOfRowAtIndex:(NSInteger)index
 {
     return self.datas[index];
-}
-
--(CGFloat)combox:(CGComBoxView *)combox heightForRowAtIndex:(NSInteger)index
-{
-    return 44.0f;
 }
 
 - (NSArray <NSNumber *>*)combox:(CGComBoxView *)combox searchText:(NSString *)searchText
@@ -69,7 +67,8 @@
 }
 
 - (void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event{
-    
+    self.combox.textView.text = @"来了";
 }
+
 
 @end
