@@ -283,6 +283,7 @@ static NSString *cellIndentifier = @"cellIndentifier";
     cell.textLabel.font = self.textView.font;
     cell.textLabel.textColor = self.textView.textColor;//kTextColor;
     cell.borderColor = self.borderColor;
+    [cell.deleteBtn addTarget:self action:@selector(deleteOneData:) forControlEvents:UIControlEventTouchUpInside];
     if ([self.delegate respondsToSelector:@selector(combox:titleOfRowAtIndex:)]) {
         cell.textLabel.text = [self.delegate combox:self titleOfRowAtIndex:indexPath.row];
     }

@@ -23,6 +23,7 @@
     CGComBoxView *combox = [[CGComBoxView alloc] initWithFrame:CGRectMake(10, 100, 200, 40)];
     combox.supView = self.view;
     combox.delegate = self;
+    combox.isDelete = YES;
     combox.currentIndex = 0;
     [self.view addSubview:combox];
 }
@@ -47,6 +48,11 @@
 {
     NSPredicate *predicate = [NSPredicate predicateWithFormat:@"SELF contains %@", searchText];
     [self.datas filterUsingPredicate:predicate];
+}
+
+- (void)deleteAtIndex:(NSInteger)index inCombox:(CGComBoxView *)combox
+{
+    
 }
 
 @end
