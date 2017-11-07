@@ -498,7 +498,7 @@ static NSString *cellIndentifier = @"cellIndentifier";
 - (void)dealloc
 {
     [[NSNotificationCenter defaultCenter] removeObserver:self name:CGComBoxView_Notification object:nil];
-    [self removeObserver:self forKeyPath:@"text"];
+    [self.textView removeObserver:self forKeyPath:@"text"];
 }
 
 @end
