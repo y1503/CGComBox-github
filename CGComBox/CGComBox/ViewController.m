@@ -25,6 +25,7 @@
     combox.delegate = self;
     combox.isDelete = YES;
     combox.currentIndex = 0;
+    combox.isSearch = YES;
     [self.view addSubview:combox];
 }
 
@@ -44,14 +45,30 @@
     return 44.0f;
 }
 
-- (void)combox:(CGComBoxView *)combox searchText:(NSString *)searchText
+- (NSArray <NSNumber *>*)combox:(CGComBoxView *)combox searchText:(NSString *)searchText
 {
-    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"SELF contains %@", searchText];
-    [self.datas filterUsingPredicate:predicate];
+    NSMutableArray *searchArr = [NSMutableArray array];
+    for (NSInteger i = 0; i < self.datas.count ; i++) {
+        NSString *string = self.datas[i];
+        if ([string containsString:searchText]) {
+            [searchArr addObject:@(i)];
+        }
+    }
+    
+    return searchArr;
 }
 
 - (void)deleteAtIndex:(NSInteger)index inCombox:(CGComBoxView *)combox
 {
+    
+}
+
+- (void)combox:(CGComBoxView *)combox didSelectRowAtIndex:(NSInteger)index
+{
+    
+}
+
+- (void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event{
     
 }
 

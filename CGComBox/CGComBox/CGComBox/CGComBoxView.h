@@ -17,8 +17,8 @@
 -(void)deleteAtIndex:(NSInteger)index inCombox:(CGComBoxView *)combox;
 //展开后，每一行显示的高度
 -(CGFloat)combox:(CGComBoxView *)combox heightForRowAtIndex:(NSInteger)index;//默认combox自身的高度
-//输入框内的字符正在变化，可以用做搜索
--(void)combox:(CGComBoxView *)combox searchText:(NSString *)searchText;
+//输入框内的字符正在变化，可以用做搜索，返回值是搜索到的数据在数据源里的index
+-(NSArray <NSNumber *>*)combox:(CGComBoxView *)combox searchText:(NSString *)searchText;
 @end
 
 @interface CGComBoxView : UIView<UITableViewDataSource,UITableViewDelegate,UITextViewDelegate>

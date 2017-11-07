@@ -15,8 +15,9 @@ static NSString *cellIndentifier = @"cellIndentifier";
     UIButton *_btn;
 }
 
-@property (nonatomic, strong)UIView *coverView; // 覆盖视图
-@property (nonatomic,strong) UITableView *listTable;
+@property (nonatomic, strong) UIView *coverView; // 覆盖视图
+@property (nonatomic, strong) UITableView *listTable;
+@property (nonatomic, strong) NSArray *searchResultArr;//搜索用，不为空，就使用该数组显示数据
 @end
 
 @implementation CGComBoxView
@@ -262,13 +263,20 @@ static NSString *cellIndentifier = @"cellIndentifier";
 
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
+    if (self.searchResultArr) {
+        return self.searchResultArr.count;
+    }
     return [self rows];
 }
 
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     if ([self.delegate respondsToSelector:@selector(combox:heightForRowAtIndex:)]) {
-        return [self.delegate combox:self heightForRowAtIndex:indexPath.row];
+        NSInteger index = indexPath.row;
+        if (self.searchResultArr) {
+            index = [self.searchResultArr[indexPath.row] integerValue];
+        }
+        return [self.delegate combox:self heightForRowAtIndex:index];
     }
     
     return self.frame.size.height;
@@ -284,8 +292,14 @@ static NSString *cellIndentifier = @"cellIndentifier";
     cell.textLabel.textColor = self.textView.textColor;//kTextColor;
     cell.borderColor = self.borderColor;
     [cell.deleteBtn addTarget:self action:@selector(deleteOneData:) forControlEvents:UIControlEventTouchUpInside];
+    
     if ([self.delegate respondsToSelector:@selector(combox:titleOfRowAtIndex:)]) {
-        cell.textLabel.text = [self.delegate combox:self titleOfRowAtIndex:indexPath.row];
+        
+        NSInteger index = indexPath.row;
+        if (self.searchResultArr) {
+            index = [self.searchResultArr[indexPath.row] integerValue];
+        }
+        cell.textLabel.text = [self.delegate combox:self titleOfRowAtIndex:index];
     }
     
     cell.showDeleteBtn = self.isDelete;
@@ -298,7 +312,11 @@ static NSString *cellIndentifier = @"cellIndentifier";
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     self.currentIndex = indexPath.row;
     if ([self.delegate respondsToSelector:@selector(combox:didSelectRowAtIndex:)]) {
-        [self.delegate combox:self didSelectRowAtIndex:indexPath.row];
+        NSInteger index = indexPath.row;
+        if (self.searchResultArr) {
+            index = [self.searchResultArr[indexPath.row] integerValue];
+        }
+        [self.delegate combox:self didSelectRowAtIndex:index];
     }
     
     [self tapAction];
@@ -321,10 +339,27 @@ static NSString *cellIndentifier = @"cellIndentifier";
 - (void)textViewDidChange:(UITextView *)textView
 {
     if ([self.delegate respondsToSelector:@selector(combox:searchText:)]) {
-        [self.delegate combox:self searchText:textView.text];
-        [self.listTable reloadData];
+        self.searchResultArr = [self.delegate combox:self searchText:textView.text];
+        if (self.searchResultArr.count == 0 && textView.text.length == 0) {
+            self.searchResultArr = nil;
+        }
+        
+        if (!self.isOpen) {
+            [self tapAction];
+        }else{
+            [self.listTable reloadData];
+        }
     }
 }
+
+- (BOOL)textViewShouldBeginEditing:(UITextView *)textView
+{
+    if (!self.isOpen) {
+        [self tapAction];
+    }
+    return YES;
+}
+
 
 - (BOOL)textView:(UITextView *)textView shouldChangeTextInRange:(NSRange)range replacementText:(NSString *)text
 {
@@ -361,6 +396,10 @@ static NSString *cellIndentifier = @"cellIndentifier";
 
 - (void)setCurrentIndex:(NSInteger)currentIndex
 {
+    NSInteger index = currentIndex;
+    if (self.searchResultArr) {
+        index = [self.searchResultArr[currentIndex] integerValue];
+    }
     if ([self.delegate respondsToSelector:@selector(combox:titleOfRowAtIndex:)]) {
         self.textView.text = [self.delegate combox:self titleOfRowAtIndex:currentIndex];
     }
