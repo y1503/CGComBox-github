@@ -282,6 +282,7 @@ static NSString *cellIndentifier = @"cellIndentifier";
     cell.textLabel.textAlignment = self.textView.textAlignment;
     cell.textLabel.font = self.textView.font;
     cell.textLabel.textColor = self.textView.textColor;//kTextColor;
+    cell.borderColor = self.borderColor;
     if ([self.delegate respondsToSelector:@selector(combox:titleOfRowAtIndex:)]) {
         cell.textLabel.text = [self.delegate combox:self titleOfRowAtIndex:indexPath.row];
     }
@@ -294,10 +295,11 @@ static NSString *cellIndentifier = @"cellIndentifier";
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
+    self.currentIndex = indexPath.row;
     if ([self.delegate respondsToSelector:@selector(combox:didSelectRowAtIndex:)]) {
         [self.delegate combox:self didSelectRowAtIndex:indexPath.row];
     }
-    self.currentIndex = indexPath.row;
+    
     [self tapAction];
 
 }
