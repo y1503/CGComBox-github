@@ -21,13 +21,13 @@
     
     self.datas = [NSMutableArray arrayWithObjects:@"123", @"2", nil];
     
-    CGComBoxView *combox = [[CGComBoxView alloc] initWithFrame:CGRectMake(10, 100, 200, 30)];
+    CGComBoxView *combox = [[CGComBoxView alloc] initWithFrame:CGRectMake(10, 100, 200, 60)];
     combox.supView = self.view;
     combox.delegate = self;
     combox.isDelete = YES;
     combox.currentIndex = 0;
     combox.isSearch = YES;
-    combox.placeHolder = @"测试了";
+    combox.textField.placeholder = @"测试了";
     self.combox = combox;
     [self.view addSubview:combox];
 }
@@ -43,18 +43,27 @@
     return self.datas[index];
 }
 
-- (NSArray <NSNumber *>*)combox:(CGComBoxView *)combox searchText:(NSString *)searchText
+- (void)combox:(CGComBoxView *)combox searchText:(NSString *)searchText searchHandle:(void (^)(BOOL (^)(NSInteger)))searchHandle
 {
-    NSMutableArray *searchArr = [NSMutableArray array];
-    for (NSInteger i = 0; i < self.datas.count ; i++) {
-        NSString *string = self.datas[i];
-        if ([string containsString:searchText]) {
-            [searchArr addObject:@(i)];
-        }
-    }
-    
-    return searchArr;
+    searchHandle(^(NSInteger index){
+        NSString *string = self.datas[index];
+        return [string containsString:searchText];
+    });
 }
+
+//- (NSArray <NSNumber *>*)combox:(CGComBoxView *)combox searchText:(NSString *)searchText
+//{
+//    NSMutableArray *searchArr = [NSMutableArray array];
+//    for (NSInteger i = 0; i < self.datas.count ; i++) {
+//        NSString *string = self.datas[i];
+//        if ([string containsString:searchText]) {
+//            [searchArr addObject:@(i)];
+//        }
+//    }
+//
+//    return searchArr;
+//}
+
 
 - (void)deleteAtIndex:(NSInteger)index inCombox:(CGComBoxView *)combox
 {
@@ -66,9 +75,9 @@
     
 }
 
-- (void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event{
-    self.combox.textView.text = @"来了";
-}
+//- (void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event{
+//    self.combox.textView.text = @"来了";
+//}
 
 
 @end

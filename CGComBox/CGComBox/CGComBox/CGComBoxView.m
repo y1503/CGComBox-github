@@ -10,11 +10,10 @@
 
 static NSString *cellIndentifier = @"cellIndentifier";
 
-@interface CGComBoxView ()
+@interface CGComBoxView ()<UITableViewDataSource,UITableViewDelegate,UIGestureRecognizerDelegate,UITextFieldDelegate>
 {
     UIButton *_btn;
 }
-
 @property (nonatomic, strong) UIView *coverView; // 覆盖视图
 @property (nonatomic, strong) UITableView *listTable;
 @property (nonatomic, strong) UILabel *placeHolderLbl;
@@ -42,40 +41,21 @@ static NSString *cellIndentifier = @"cellIndentifier";
         }];
         
         //初始化textfiled
-        _textView = [[UITextView alloc] init];
-        _textView.font = [UIFont systemFontOfSize:14];
-        _textView.backgroundColor = [UIColor clearColor];
-        _textView.textAlignment = NSTextAlignmentLeft;
-        _textView.delegate = self;
-        _textView.returnKeyType = UIReturnKeyDone;
-        _textView.textColor = kTextColor;
-        
-        [_textView addObserver:self forKeyPath:@"text" options:NSKeyValueObservingOptionNew|NSKeyValueObservingOptionOld context:nil];
-        
-        _placeHolderLbl = [[UILabel alloc] init];
-        _placeHolderLbl.textColor = [UIColor lightGrayColor];
-        _placeHolderLbl.font = [UIFont systemFontOfSize:14];
-        _placeHolderLbl.textAlignment = NSTextAlignmentLeft;
-        _placeHolderLbl.numberOfLines = 0;
-        _placeHolderLbl.lineBreakMode = NSLineBreakByCharWrapping;
-        [_textView addSubview:_placeHolderLbl];
-        [self.placeHolderLbl mas_makeConstraints:^(MASConstraintMaker *make) {
-            make.left.mas_equalTo(_textView).offset(10/2);
-            make.right.mas_equalTo(_textView).offset(-10/2);
-            make.top.mas_equalTo(_textView).offset(10/2);
-            make.bottom.mas_equalTo(_textView).offset(-10/2);
-            make.width.mas_lessThanOrEqualTo(_textView.mas_width).offset(-10);
-        }];
-        
-        
-        
-        [_btn addSubview:_textView];
+        self.textField = [[UITextField alloc] init];
+        self.textField.font = [UIFont systemFontOfSize:14];
+        self.textField.backgroundColor = [UIColor clearColor];
+        self.textField.textAlignment = NSTextAlignmentLeft;
+        self.textField.delegate = self;
+        self.textField.returnKeyType = UIReturnKeyDone;
+        self.textField.textColor = kTextColor;
+        [self.textField addTarget:self action:@selector(textFieldTextChaged:) forControlEvents:UIControlEventEditingChanged];
+        [_btn addSubview:_textField];
         
         _arrow = [[UIImageView alloc] init];
         _arrow.image = [UIImage imageNamed:@"xiala_big.png"];
         [_btn addSubview:_arrow];
         
-        [_textView mas_makeConstraints:^(MASConstraintMaker *make) {
+        [_textField mas_makeConstraints:^(MASConstraintMaker *make) {
             make.left.mas_equalTo(_btn).offset(0);
             make.right.mas_equalTo(_arrow.mas_left).offset(0);
             make.centerY.mas_equalTo(_btn.mas_centerY);
@@ -107,7 +87,7 @@ static NSString *cellIndentifier = @"cellIndentifier";
         //设置默认值
         self.isDown = YES;
         self.isSearch = NO;
-        self.isMoreLine = NO;
+        self.isDelete = NO;
     }
     return self;
 }
@@ -155,7 +135,7 @@ static NSString *cellIndentifier = @"cellIndentifier";
 #pragma mark -- 点击事件
 -(void)tapAction
 {
-    if (![self.delegate respondsToSelector:@selector(combox:searchText:)]) {
+    if (![self.delegate respondsToSelector:@selector(combox:searchText:searchHandle:)]) {
         [_supView endEditing:YES];
     }
     
@@ -163,7 +143,7 @@ static NSString *cellIndentifier = @"cellIndentifier";
     {
         _isOpen = NO;
         self.coverView.hidden = YES;
-        [_textView resignFirstResponder];
+        [_textField resignFirstResponder];
         [UIView animateWithDuration:0.3 animations:^{
             CGRect rect = _listTable.frame;
             if (self.isDown) {
@@ -256,6 +236,7 @@ static NSString *cellIndentifier = @"cellIndentifier";
         _coverView = [[UIView alloc] initWithFrame:self.supView.bounds];
         _coverView.backgroundColor = [UIColor clearColor];
         UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapClicked:)];
+//        tap.delegate = self;
         tap.numberOfTouchesRequired = 1;
         tap.numberOfTapsRequired = 1;
         
@@ -303,9 +284,9 @@ static NSString *cellIndentifier = @"cellIndentifier";
 
     CGComBoxTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellIndentifier forIndexPath:indexPath];
     
-    cell.textLabel.textAlignment = self.textView.textAlignment;
-    cell.textLabel.font = self.textView.font;
-    cell.textLabel.textColor = self.textView.textColor;//kTextColor;
+    cell.textLabel.textAlignment = self.textField.textAlignment;
+    cell.textLabel.font = self.textField.font;
+    cell.textLabel.textColor = self.textField.textColor;//kTextColor;
     cell.borderColor = self.borderColor;
     [cell.deleteBtn addTarget:self action:@selector(deleteOneData:) forControlEvents:UIControlEventTouchUpInside];
     
@@ -351,45 +332,33 @@ static NSString *cellIndentifier = @"cellIndentifier";
     }
 }
 
-#pragma mark - UITextViewDelegate
-- (void)textViewDidChange:(UITextView *)textView
+#pragma mark -- 搜索的代理方法用
+- (void)textChage:(NSString *)text
 {
-    if ([self.delegate respondsToSelector:@selector(combox:searchText:)]) {
-        self.searchResultArr = [self.delegate combox:self searchText:textView.text];
-        if (self.searchResultArr.count == 0 && textView.text.length == 0) {
-            self.searchResultArr = nil;
-        }
-
-        if (!self.isOpen) {
-            [self tapAction];
-        }else{
-            [self.listTable reloadData];
-        }
-    }
-
-    if (_textView.text.length == 0) {
-        self.placeHolderLbl.hidden = NO;
-    }else{
-        self.placeHolderLbl.hidden = YES;
-    }
-}
-
-- (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary<NSKeyValueChangeKey,id> *)change context:(void *)context
-{
-    if (_textView.text.length == 0) {
-        self.placeHolderLbl.hidden = NO;
-    }else{
-        self.placeHolderLbl.hidden = YES;
+    if ([self.delegate respondsToSelector:@selector(combox:searchText:searchHandle:)]) {
+        [self.delegate combox:self searchText:text searchHandle:^(BOOL (^condition)(NSInteger index)) {
+            NSMutableArray *searchResult = [NSMutableArray array];
+            NSInteger total = [self rows];
+            for (NSInteger i = 0; i < total; i++) {
+                if (condition(i)) {//返回YES，说明该项满足搜索条件
+                    [searchResult addObject:@(i)];
+                }
+            }
+            self.searchResultArr = searchResult;
+            if (self.searchResultArr.count == 0 && text.length == 0) {
+                self.searchResultArr = nil;
+            }
+            if (!self.isOpen) {
+                [self tapAction];
+            }else{
+                [self.listTable reloadData];
+            }
+        }];
     }
 }
 
-- (void)setPlaceHolder:(NSString *)placeHolder
-{
-    self.placeHolderLbl.text = placeHolder;
-    _placeHolder = placeHolder;
-}
-
-- (BOOL)textViewShouldBeginEditing:(UITextView *)textView
+#pragma mark - UITextFieldDelegate
+- (BOOL)textFieldShouldBeginEditing:(UITextField *)textField
 {
     if (!self.isOpen) {
         [self tapAction];
@@ -397,13 +366,14 @@ static NSString *cellIndentifier = @"cellIndentifier";
     return YES;
 }
 
-
-- (BOOL)textView:(UITextView *)textView shouldChangeTextInRange:(NSRange)range replacementText:(NSString *)text
+- (void)textFieldTextChaged:(UITextField *)textField
 {
-    if ([text isEqualToString:@"\n"]) {
-        [textView resignFirstResponder];
-        return NO;
-    }
+    [self textChage:textField.text];
+}
+
+- (BOOL)textFieldShouldReturn:(UITextField *)textField
+{
+    [textField resignFirstResponder];
     return YES;
 }
 
@@ -438,7 +408,7 @@ static NSString *cellIndentifier = @"cellIndentifier";
         index = [self.searchResultArr[currentIndex] integerValue];
     }
     if ([self.delegate respondsToSelector:@selector(combox:titleOfRowAtIndex:)]) {
-        self.textView.text = [self.delegate combox:self titleOfRowAtIndex:currentIndex];
+        self.textField.text = [self.delegate combox:self titleOfRowAtIndex:currentIndex];
     }
     _currentIndex = currentIndex;
 }
@@ -475,19 +445,7 @@ static NSString *cellIndentifier = @"cellIndentifier";
 - (void)setIsSearch:(BOOL)isSearch
 {
     _isSearch = isSearch;
-    self.textView.userInteractionEnabled = isSearch;
-}
-
-- (void)setIsMoreLine:(BOOL)isMoreLine
-{
-    [_textView mas_updateConstraints:^(MASConstraintMaker *make) {
-        if (isMoreLine) {
-            make.height.mas_equalTo(_btn.mas_height).offset(0);
-        }else{
-            make.height.mas_equalTo(@21);
-        }
-    }];
-    _isMoreLine = isMoreLine;
+    self.textField.userInteractionEnabled = isSearch;
 }
 
 - (void)reloadData
@@ -495,10 +453,29 @@ static NSString *cellIndentifier = @"cellIndentifier";
     [self.listTable reloadData];
 }
 
+//#pragma mark - UIGestureRecognizerDelegate
+//- (BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldReceiveTouch:(UITouch *)touch {
+//
+//    if ([touch.view isMemberOfClass:NSClassFromString(@"UITableViewCellContentView")]
+//        || [touch.view isMemberOfClass:[UITextField class]]
+//        || [touch.view isMemberOfClass:[UITextView class]]) {
+//        return NO;
+//    }
+//
+//    return YES;
+//}
+//
+//- (BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldRecognizeSimultaneouslyWithGestureRecognizer:(UIGestureRecognizer *)otherGestureRecognizer {
+//    if ([otherGestureRecognizer.view isKindOfClass:[UITableView class]]) {
+//        return NO;
+//    }
+//    return YES;
+//}
+
+
 - (void)dealloc
 {
     [[NSNotificationCenter defaultCenter] removeObserver:self name:CGComBoxView_Notification object:nil];
-    [self.textView removeObserver:self forKeyPath:@"text"];
 }
 
 @end
