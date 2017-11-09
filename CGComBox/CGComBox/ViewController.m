@@ -45,6 +45,7 @@
 
 - (BOOL (^)(NSInteger))combox:(CGComBoxView *)combox searchText:(NSString *)searchText
 {
+    return NULL;
     return  ^(NSInteger index){
         NSString *string = self.datas[index];
         return [string containsString:searchText];

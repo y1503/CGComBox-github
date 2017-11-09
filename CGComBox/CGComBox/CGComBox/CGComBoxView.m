@@ -135,7 +135,7 @@ static NSString *cellIndentifier = @"cellIndentifier";
 #pragma mark -- 点击事件
 -(void)tapAction
 {
-    if (![self.delegate respondsToSelector:@selector(combox:searchText:)]) {
+    if (!self.isSearch) {
         [_supView endEditing:YES];
     }
     
@@ -335,8 +335,11 @@ static NSString *cellIndentifier = @"cellIndentifier";
 #pragma mark -- 搜索的代理方法用
 - (void)textChage:(NSString *)text
 {
-    if ([self.delegate respondsToSelector:@selector(combox:searchText:)]) {
+    if (self.isSearch&&[self.delegate respondsToSelector:@selector(combox:searchText:)]) {
         BOOL (^condition)(NSInteger index) = [self.delegate combox:self searchText:text];
+        if (!condition) {
+            return;
+        }
         NSMutableArray *searchResult = [NSMutableArray array];
         NSInteger total = [self rows];
         for (NSInteger i = 0; i < total; i++) {
@@ -445,6 +448,12 @@ static NSString *cellIndentifier = @"cellIndentifier";
 {
     _isSearch = isSearch;
     self.textField.userInteractionEnabled = isSearch;
+}
+
+- (void)setIsDelete:(BOOL)isDelete
+{
+    _isDelete = isDelete;
+    [self reloadData];
 }
 
 - (void)reloadData
