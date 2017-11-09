@@ -135,7 +135,7 @@ static NSString *cellIndentifier = @"cellIndentifier";
 #pragma mark -- 点击事件
 -(void)tapAction
 {
-    if (![self.delegate respondsToSelector:@selector(combox:searchText:searchHandle:)]) {
+    if (![self.delegate respondsToSelector:@selector(combox:searchText:)]) {
         [_supView endEditing:YES];
     }
     
@@ -335,25 +335,24 @@ static NSString *cellIndentifier = @"cellIndentifier";
 #pragma mark -- 搜索的代理方法用
 - (void)textChage:(NSString *)text
 {
-    if ([self.delegate respondsToSelector:@selector(combox:searchText:searchHandle:)]) {
-        [self.delegate combox:self searchText:text searchHandle:^(BOOL (^condition)(NSInteger index)) {
-            NSMutableArray *searchResult = [NSMutableArray array];
-            NSInteger total = [self rows];
-            for (NSInteger i = 0; i < total; i++) {
-                if (condition(i)) {//返回YES，说明该项满足搜索条件
-                    [searchResult addObject:@(i)];
-                }
+    if ([self.delegate respondsToSelector:@selector(combox:searchText:)]) {
+        BOOL (^condition)(NSInteger index) = [self.delegate combox:self searchText:text];
+        NSMutableArray *searchResult = [NSMutableArray array];
+        NSInteger total = [self rows];
+        for (NSInteger i = 0; i < total; i++) {
+            if (condition(i)) {//返回YES，说明该项满足搜索条件
+                [searchResult addObject:@(i)];
             }
-            self.searchResultArr = searchResult;
-            if (self.searchResultArr.count == 0 && text.length == 0) {
-                self.searchResultArr = nil;
-            }
-            if (!self.isOpen) {
-                [self tapAction];
-            }else{
-                [self.listTable reloadData];
-            }
-        }];
+        }
+        self.searchResultArr = searchResult;
+        if (self.searchResultArr.count == 0 && text.length == 0) {
+            self.searchResultArr = nil;
+        }
+        if (!self.isOpen) {
+            [self tapAction];
+        }else{
+            [self.listTable reloadData];
+        }
     }
 }
 

@@ -43,26 +43,13 @@
     return self.datas[index];
 }
 
-- (void)combox:(CGComBoxView *)combox searchText:(NSString *)searchText searchHandle:(void (^)(BOOL (^)(NSInteger)))searchHandle
+- (BOOL (^)(NSInteger))combox:(CGComBoxView *)combox searchText:(NSString *)searchText
 {
-    searchHandle(^(NSInteger index){
+    return  ^(NSInteger index){
         NSString *string = self.datas[index];
         return [string containsString:searchText];
-    });
+    };
 }
-
-//- (NSArray <NSNumber *>*)combox:(CGComBoxView *)combox searchText:(NSString *)searchText
-//{
-//    NSMutableArray *searchArr = [NSMutableArray array];
-//    for (NSInteger i = 0; i < self.datas.count ; i++) {
-//        NSString *string = self.datas[i];
-//        if ([string containsString:searchText]) {
-//            [searchArr addObject:@(i)];
-//        }
-//    }
-//
-//    return searchArr;
-//}
 
 
 - (void)deleteAtIndex:(NSInteger)index inCombox:(CGComBoxView *)combox

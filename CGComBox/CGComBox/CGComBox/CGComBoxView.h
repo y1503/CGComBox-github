@@ -17,7 +17,7 @@
 -(void)deleteAtIndex:(NSInteger)index inCombox:(CGComBoxView *)combox;
 
 //输入框内的字符正在变化，可以用做搜索，condition的返回值为YES时，满足搜索条件
-- (void)combox:(CGComBoxView *)combox searchText:(NSString *)searchText searchHandle:(void (^)(BOOL (^condition)(NSInteger index)))searchHandle;
+- (BOOL (^)(NSInteger index))combox:(CGComBoxView *)combox searchText:(NSString *)searchText;
 @end
 
 @interface CGComBoxView : UIView
