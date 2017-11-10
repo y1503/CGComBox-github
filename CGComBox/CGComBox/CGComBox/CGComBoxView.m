@@ -406,13 +406,16 @@ static NSString *cellIndentifier = @"cellIndentifier";
 - (void)setCurrentIndex:(NSInteger)currentIndex
 {
     NSInteger index = currentIndex;
+    _currentIndex = currentIndex;
+    if ([self rows] == 0) {
+        return;//如果个数0就不作操作
+    }
     if (self.searchResultArr) {
         index = [self.searchResultArr[currentIndex] integerValue];
     }
     if ([self.delegate respondsToSelector:@selector(combox:titleOfRowAtIndex:)]) {
         self.textField.text = [self.delegate combox:self titleOfRowAtIndex:currentIndex];
     }
-    _currentIndex = currentIndex;
 }
 
 - (void)closeOhter:(NSNotification *)notification

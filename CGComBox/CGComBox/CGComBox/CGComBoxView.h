@@ -33,7 +33,7 @@
 @property (nonatomic, assign) BOOL isDown;//YES 下 NO 上,默认YES
 @property (nonatomic, assign) BOOL hideArrow;//默认NO不隐藏
 @property (nonatomic, assign) BOOL isTouchOutsideHide; //点击控件外面 是否隐藏, 默认YES 隐藏
-@property (nonatomic,assign) NSInteger currentIndex;
+@property (nonatomic,assign) NSInteger currentIndex;//如果需要显示默认值，需要设置该值
 @property (nonatomic, weak) id<CGComBoxViewDelegate>delegate;
 
 
