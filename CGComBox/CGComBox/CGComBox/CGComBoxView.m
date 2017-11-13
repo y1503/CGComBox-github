@@ -288,17 +288,16 @@ static NSString *cellIndentifier = @"cellIndentifier";
     cell.textLabel.font = self.textField.font;
     cell.textLabel.textColor = self.textField.textColor;//kTextColor;
     cell.borderColor = self.borderColor;
-    [cell.deleteBtn addTarget:self action:@selector(deleteOneData:) forControlEvents:UIControlEventTouchUpInside];
     
+    NSInteger index = indexPath.row;
+    if (self.searchResultArr) {
+        index = [self.searchResultArr[indexPath.row] integerValue];
+    }
     if ([self.delegate respondsToSelector:@selector(combox:titleOfRowAtIndex:)]) {
-        
-        NSInteger index = indexPath.row;
-        if (self.searchResultArr) {
-            index = [self.searchResultArr[indexPath.row] integerValue];
-        }
         cell.textLabel.text = [self.delegate combox:self titleOfRowAtIndex:index];
     }
-    
+    cell.deleteBtn.tag = index;
+    [cell.deleteBtn addTarget:self action:@selector(deleteOneData:) forControlEvents:UIControlEventTouchUpInside];
     cell.showDeleteBtn = self.isDelete;
     
     return cell;
