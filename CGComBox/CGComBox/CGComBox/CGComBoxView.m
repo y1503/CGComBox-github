@@ -176,17 +176,6 @@ static NSString *cellIndentifier = @"cellIndentifier";
             }
         }
         _isOpen = YES;
-        
-        CGRect rect = [_supView convertRect:self.frame fromView:self];
-        //去除在原来坐标系中的偏移
-        rect = CGRectOffset(rect, 0-self.frame.origin.x, 0-self.frame.origin.y);
-        if (self.isDown) {//down
-            _listTable.frame =  CGRectMake(rect.origin.x, rect.origin.y + rect.size.height, rect.size.width, 0);
-            
-        }else{//up
-            _listTable.frame =  CGRectMake(rect.origin.x, rect.origin.y, rect.size.width, 0);
-        }
-        
         self.coverView.hidden = NO;
         if (self.isTouchOutsideHide && [self rows] ) {
             [_supView addSubview:self.coverView];
@@ -194,41 +183,56 @@ static NSString *cellIndentifier = @"cellIndentifier";
         }
         
         [_supView addSubview:_listTable];
-        
         [_supView bringSubviewToFront:_listTable];//避免被其他子视图遮盖住
-
-        [UIView animateWithDuration:0.3 animations:^{
-            
-            CGFloat tableHeight = [self rows] * rect.size.height;
-            if (self.isDown) {//down
-                CGFloat height = _supView.frame.size.height - rect.origin.y - rect.size.height;
-                if (tableHeight > height) {
-                    tableHeight = height;
-                }
-                
-                _listTable.frame =  CGRectMake(rect.origin.x, rect.origin.y + rect.size.height, rect.size.width, tableHeight);
-                
-            }else{//up
-                CGFloat height = rect.origin.y;
-                if (tableHeight > height) {
-                    tableHeight = height;
-                }
-                _listTable.frame =  CGRectMake(rect.origin.x, rect.origin.y - tableHeight, rect.size.width, tableHeight);
-            }
-
-            
-        } completion:^(BOOL finished){
-
-            CGFloat rotate = 180;
-            if (_isDown == NO) {
-                rotate = -180;
-            }
-            _arrow.transform = CGAffineTransformRotate(_arrow.transform, DEGREES_TO_RADIANS(rotate));
-        }];
-        [_listTable reloadData];
+        
+        [self displayListTableView];
     }
     
 }
+
+- (void)displayTableViewHeight
+{
+    CGRect rect = [_supView convertRect:self.frame fromView:self];
+    //去除在原来坐标系中的偏移
+    rect = CGRectOffset(rect, 0-self.frame.origin.x, 0-self.frame.origin.y);
+    if (self.isDown) {//down
+        _listTable.frame =  CGRectMake(rect.origin.x, rect.origin.y + rect.size.height, rect.size.width, 0);
+        
+    }else{//up
+        _listTable.frame =  CGRectMake(rect.origin.x, rect.origin.y, rect.size.width, 0);
+    }
+    
+    [UIView animateWithDuration:0.3 animations:^{
+        
+        CGFloat tableHeight = [self rows] * rect.size.height;
+        if (self.isDown) {//down
+            CGFloat height = _supView.frame.size.height - rect.origin.y - rect.size.height;
+            if (tableHeight > height) {
+                tableHeight = height;
+            }
+            
+            _listTable.frame =  CGRectMake(rect.origin.x, rect.origin.y + rect.size.height, rect.size.width, tableHeight);
+            
+        }else{//up
+            CGFloat height = rect.origin.y;
+            if (tableHeight > height) {
+                tableHeight = height;
+            }
+            _listTable.frame =  CGRectMake(rect.origin.x, rect.origin.y - tableHeight, rect.size.width, tableHeight);
+        }
+        
+        
+    } completion:^(BOOL finished){
+        
+        CGFloat rotate = 180;
+        if (_isDown == NO) {
+            rotate = -180;
+        }
+        _arrow.transform = CGAffineTransformRotate(_arrow.transform, DEGREES_TO_RADIANS(rotate));
+    }];
+    [_listTable reloadData];
+}
+
 
 - (UIView *)coverView
 {
@@ -460,7 +464,7 @@ static NSString *cellIndentifier = @"cellIndentifier";
 
 - (void)reloadData
 {
-    [self.listTable reloadData];
+    [self displayListTableView];
 }
 
 //#pragma mark - UIGestureRecognizerDelegate

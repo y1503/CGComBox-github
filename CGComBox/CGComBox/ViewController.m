@@ -19,7 +19,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    self.datas = [NSMutableArray arrayWithObjects:@"123", @"2", nil];
+    self.datas = [NSMutableArray arrayWithObjects:@"123", @"2",@"123", @"2",@"123", @"2",@"123", @"2", nil];
     
     CGComBoxView *combox = [[CGComBoxView alloc] initWithFrame:CGRectMake(10, 100, 200, 60)];
     combox.supView = self.view;
@@ -55,7 +55,8 @@
 
 - (void)deleteAtIndex:(NSInteger)index inCombox:(CGComBoxView *)combox
 {
-    
+    [self.datas removeObjectAtIndex:index];
+    [combox reloadData];
 }
 
 - (void)combox:(CGComBoxView *)combox didSelectRowAtIndex:(NSInteger)index
