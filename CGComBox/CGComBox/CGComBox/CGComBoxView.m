@@ -417,7 +417,7 @@ static NSString *cellIndentifier = @"cellIndentifier";
         index = [self.searchResultArr[currentIndex] integerValue];
     }
     if ([self.delegate respondsToSelector:@selector(combox:titleOfRowAtIndex:)]) {
-        self.textField.text = [self.delegate combox:self titleOfRowAtIndex:currentIndex];
+        self.textField.text = [self.delegate combox:self titleOfRowAtIndex:index];
     }
 }
 
