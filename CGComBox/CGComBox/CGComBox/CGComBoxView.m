@@ -404,6 +404,8 @@ static NSString *cellIndentifier = @"cellIndentifier";
         }
         _listTable.frame =  CGRectMake(rect.origin.x, rect.origin.y - tableHeight, rect.size.width, tableHeight);
     }
+    
+    [self.listTable reloadData];
 }
 
 - (void)setCurrentIndex:(NSInteger)currentIndex

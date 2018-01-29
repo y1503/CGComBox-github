@@ -17,6 +17,14 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     // Override point for customization after application launch.
+    
+    NSCalendar *calendar = [NSCalendar calendarWithIdentifier:NSCalendarIdentifierGregorian];
+    for (int i = 0; i < 7; i++) {
+        NSDate *date = [NSDate dateWithTimeIntervalSinceNow:i * 60 * 60 * 24];
+        NSInteger weekDay = [calendar component:NSCalendarUnitWeekday fromDate:date];
+        NSLog(@"-----%ld", weekDay);
+    }
+    
     return YES;
 }
 
