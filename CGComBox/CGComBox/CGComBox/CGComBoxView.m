@@ -469,6 +469,11 @@ static NSString *cellIndentifier = @"cellIndentifier";
     [self displayListTableView];
 }
 
+- (void)search:(NSString *)searchKey
+{
+    [self textChage:searchKey];
+}
+
 //#pragma mark - UIGestureRecognizerDelegate
 //- (BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldReceiveTouch:(UITouch *)touch {
 //

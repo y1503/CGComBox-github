@@ -41,7 +41,7 @@
 - (void)reloadData;
 - (void)tapAction;
 - (void)closeCombox;
-
+- (void)search:(NSString *)searchKey;
 
 @end
 
