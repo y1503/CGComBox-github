@@ -466,6 +466,9 @@ static NSString *cellIndentifier = @"cellIndentifier";
 
 - (void)reloadData
 {
+    if (self.isSearch) {
+        [self search:self.textField.text];
+    }
     [self displayListTableView];
 }
 
