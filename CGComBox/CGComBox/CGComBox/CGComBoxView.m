@@ -156,18 +156,18 @@ static NSString *cellIndentifier = @"cellIndentifier";
         } completion:^(BOOL finished){
             [_listTable removeFromSuperview];//移除
             
-                CGFloat rotate = 180;
-                if (_isDown == NO) {
-                    rotate = -180;
-                }
-                _arrow.transform = CGAffineTransformRotate(_arrow.transform, DEGREES_TO_RADIANS(rotate));
-
-            }];
+            CGFloat rotate = 180;
+            if (_isDown == NO) {
+                rotate = -180;
+            }
+            _arrow.transform = CGAffineTransformRotate(_arrow.transform, DEGREES_TO_RADIANS(rotate));
+            
+        }];
     }
     else
     {
         [[NSNotificationCenter defaultCenter] postNotificationName:CGComBoxView_Notification object:self];
-
+        
         
         self.coverView.hidden = NO;
         if ([_delegate respondsToSelector:@selector(comboxWillUnfold:)]) {
@@ -177,9 +177,10 @@ static NSString *cellIndentifier = @"cellIndentifier";
         }
         _isOpen = YES;
         self.coverView.hidden = NO;
-        if (self.isTouchOutsideHide && [self rows] ) {
-            [_supView addSubview:self.coverView];
+        if ([_supView.subviews containsObject:self.coverView]) {
             [_supView bringSubviewToFront:self.coverView];
+        }else if (self.isTouchOutsideHide && [self rows]) {
+            [_supView addSubview:self.coverView];
         }
         
         [_supView addSubview:_listTable];
@@ -240,7 +241,7 @@ static NSString *cellIndentifier = @"cellIndentifier";
         _coverView = [[UIView alloc] initWithFrame:self.supView.bounds];
         _coverView.backgroundColor = [UIColor clearColor];
         UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapClicked:)];
-//        tap.delegate = self;
+        //        tap.delegate = self;
         tap.numberOfTouchesRequired = 1;
         tap.numberOfTapsRequired = 1;
         
@@ -254,6 +255,14 @@ static NSString *cellIndentifier = @"cellIndentifier";
 #pragma mark - 点击外部隐藏视图
 - (void)tapClicked:(UITapGestureRecognizer *)tap
 {
+    if (self.isSearch) {
+        //获取当前点击的点在_textField坐标系中的位置
+        CGPoint point = [tap locationInView:_textField];
+        if (CGRectContainsPoint(_textField.frame, point)) {//判断这个点是否在_textField所在的矩形内
+            return;
+        }
+    }
+    
     if (_isTouchOutsideHide == NO || ![self rows]) {
         self.coverView.hidden = YES;
         return;
@@ -285,7 +294,7 @@ static NSString *cellIndentifier = @"cellIndentifier";
 
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-
+    
     CGComBoxTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellIndentifier forIndexPath:indexPath];
     
     cell.textLabel.textAlignment = self.textField.textAlignment;
@@ -320,7 +329,7 @@ static NSString *cellIndentifier = @"cellIndentifier";
     }
     
     [self tapAction];
-
+    
 }
 
 -(void)deSelectedRow
@@ -461,7 +470,7 @@ static NSString *cellIndentifier = @"cellIndentifier";
 - (void)setIsDelete:(BOOL)isDelete
 {
     _isDelete = isDelete;
-    [self reloadData];
+    [self.listTable reloadData];
 }
 
 - (void)reloadData
@@ -503,3 +512,4 @@ static NSString *cellIndentifier = @"cellIndentifier";
 }
 
 @end
+
