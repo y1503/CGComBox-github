@@ -424,7 +424,7 @@ static NSString *cellIndentifier = @"cellIndentifier";
     if ([self rows] == 0) {
         return;//如果个数0就不作操作
     }
-    if (self.searchResultArr) {
+    if (self.searchResultArr.count > currentIndex) {
         index = [self.searchResultArr[currentIndex] integerValue];
     }
     if ([self.delegate respondsToSelector:@selector(combox:titleOfRowAtIndex:)]) {
