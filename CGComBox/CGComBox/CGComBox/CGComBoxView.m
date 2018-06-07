@@ -168,8 +168,6 @@ static NSString *cellIndentifier = @"cellIndentifier";
     {
         [[NSNotificationCenter defaultCenter] postNotificationName:CGComBoxView_Notification object:self];
         
-        
-        self.coverView.hidden = NO;
         if ([_delegate respondsToSelector:@selector(comboxWillUnfold:)]) {
             if (![_delegate comboxWillUnfold:self]) {
                 return;
