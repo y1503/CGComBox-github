@@ -22,74 +22,82 @@ static NSString *cellIndentifier = @"cellIndentifier";
 
 @implementation CGComBoxView
 
+- (void)awakeFromNib {
+    [super awakeFromNib];
+    [self commonInit];
+}
 
 - (instancetype)initWithFrame:(CGRect)frame
 {
     if (self=[super initWithFrame:frame]) {
-        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(closeOhter:) name:CGComBoxView_Notification object:nil];
-        
-        self.borderColor = kBorderColor;
-        
-        //初始化_btn
-        _btn = [UIButton buttonWithType:UIButtonTypeCustom];
-        
-        [_btn addTarget:self action:@selector(tapAction) forControlEvents:UIControlEventTouchUpInside];
-        [self addSubview:_btn];
-        
-        [_btn mas_makeConstraints:^(MASConstraintMaker *make) {
-            make.edges.equalTo(self).insets(UIEdgeInsetsMake(0, 5, 0, 5));
-        }];
-        
-        //初始化textfiled
-        self.textField = [[UITextField alloc] init];
-        self.textField.font = [UIFont systemFontOfSize:14];
-        self.textField.backgroundColor = [UIColor clearColor];
-        self.textField.textAlignment = NSTextAlignmentLeft;
-        self.textField.delegate = self;
-        self.textField.returnKeyType = UIReturnKeyDone;
-        self.textField.textColor = kTextColor;
-        [self.textField addTarget:self action:@selector(textFieldTextChaged:) forControlEvents:UIControlEventEditingChanged];
-        [_btn addSubview:_textField];
-        
-        _arrow = [[UIImageView alloc] init];
-        _arrow.image = [UIImage imageNamed:@"xiala_big.png"];
-        [_btn addSubview:_arrow];
-        
-        [_textField mas_makeConstraints:^(MASConstraintMaker *make) {
-            make.left.mas_equalTo(_btn).offset(0);
-            make.right.mas_equalTo(_arrow.mas_left).offset(0);
-            make.centerY.mas_equalTo(_btn.mas_centerY);
-            make.height.mas_equalTo(_btn.mas_height).offset(0);
-        }];
-        
-        [_arrow mas_makeConstraints:^(MASConstraintMaker *make) {
-            make.right.mas_equalTo(_btn).offset(0);
-            make.centerY.mas_equalTo(_btn.mas_centerY);
-            make.height.mas_equalTo(_btn.mas_height).multipliedBy(0.75);
-            make.width.mas_equalTo(_arrow.mas_height).multipliedBy(0.75);
-        }];
-        
-        
-        //初始化tableView
-        //默认不展开
-        _isOpen = NO;
-        _listTable = [[UITableView alloc] initWithFrame:CGRectZero style:UITableViewStylePlain];
-        _listTable.separatorStyle = UITableViewCellSeparatorStyleNone;
-        _listTable.delegate = self;
-        _listTable.dataSource = self;
-        _listTable.layer.borderWidth = 0.5;
-        _listTable.layer.borderColor = kTextColor.CGColor;
-        [_listTable registerClass:[CGComBoxTableViewCell class] forCellReuseIdentifier:cellIndentifier];
-        _isTouchOutsideHide = YES;
-        
-        
-        
-        //设置默认值
-        self.isDown = YES;
-        self.isSearch = NO;
-        self.isDelete = NO;
+        [self commonInit];
     }
     return self;
+}
+
+- (void)commonInit {
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(closeOhter:) name:CGComBoxView_Notification object:nil];
+    
+    self.borderColor = kBorderColor;
+    
+    //初始化_btn
+    _btn = [UIButton buttonWithType:UIButtonTypeCustom];
+    
+    [_btn addTarget:self action:@selector(tapAction) forControlEvents:UIControlEventTouchUpInside];
+    [self addSubview:_btn];
+    
+    [_btn mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.edges.equalTo(self).insets(UIEdgeInsetsMake(0, 5, 0, 5));
+    }];
+    
+    //初始化textfiled
+    self.textField = [[UITextField alloc] init];
+    self.textField.font = [UIFont systemFontOfSize:14];
+    self.textField.backgroundColor = [UIColor clearColor];
+    self.textField.textAlignment = NSTextAlignmentLeft;
+    self.textField.delegate = self;
+    self.textField.returnKeyType = UIReturnKeyDone;
+    self.textField.textColor = kTextColor;
+    [self.textField addTarget:self action:@selector(textFieldTextChaged:) forControlEvents:UIControlEventEditingChanged];
+    [_btn addSubview:_textField];
+    
+    _arrow = [[UIImageView alloc] init];
+    _arrow.image = [UIImage imageNamed:@"xiala_big.png"];
+    [_btn addSubview:_arrow];
+    
+    [_textField mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.left.mas_equalTo(_btn).offset(0);
+        make.right.mas_equalTo(_arrow.mas_left).offset(0);
+        make.centerY.mas_equalTo(_btn.mas_centerY);
+        make.height.mas_equalTo(_btn.mas_height).offset(0);
+    }];
+    
+    [_arrow mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.right.mas_equalTo(_btn).offset(0);
+        make.centerY.mas_equalTo(_btn.mas_centerY);
+        make.height.mas_equalTo(_btn.mas_height).multipliedBy(0.75);
+        make.width.mas_equalTo(_arrow.mas_height).multipliedBy(0.75);
+    }];
+    
+    
+    //初始化tableView
+    //默认不展开
+    _isOpen = NO;
+    _listTable = [[UITableView alloc] initWithFrame:CGRectZero style:UITableViewStylePlain];
+    _listTable.separatorStyle = UITableViewCellSeparatorStyleNone;
+    _listTable.delegate = self;
+    _listTable.dataSource = self;
+    _listTable.layer.borderWidth = 0.5;
+    _listTable.layer.borderColor = kTextColor.CGColor;
+    [_listTable registerClass:[CGComBoxTableViewCell class] forCellReuseIdentifier:cellIndentifier];
+    _isTouchOutsideHide = YES;
+    
+    
+    
+    //设置默认值
+    self.isDown = YES;
+    self.isSearch = NO;
+    self.isDelete = NO;
 }
 
 - (instancetype)init
