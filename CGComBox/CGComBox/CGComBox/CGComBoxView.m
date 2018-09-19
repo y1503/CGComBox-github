@@ -372,7 +372,11 @@ static NSString *cellIndentifier = @"cellIndentifier";
         if (!self.isOpen) {
             [self tapAction];
         }else{
-            [self.listTable reloadData];
+            if (self.searchResultArr.count == 0 && text.length) {
+                [self closeCombox];
+            } else {
+                [self.listTable reloadData];
+            }
         }
     }
 }
