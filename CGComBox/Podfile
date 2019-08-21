@@ -7,7 +7,7 @@ target 'CGComBox' do
 
   # Pods for CGComBox
 
-   pod 'Masonry', '~> 1.0.2'
+   pod 'Masonry'
 
 
   target 'CGComBoxTests' do
