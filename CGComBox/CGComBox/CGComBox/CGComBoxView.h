@@ -9,6 +9,8 @@
 -(NSString *)combox:(CGComBoxView *)combox titleOfRowAtIndex:(NSInteger)index;//每条显示的内容
 
 @optional
+///将要选中了一行,返回yes允许选中，返回no不允许选中
+-(BOOL)combox:(CGComBoxView *)combox willSelectRowAtIndex:(NSInteger)index;
 //选中了一行
 -(void)combox:(CGComBoxView *)combox didSelectRowAtIndex:(NSInteger)index;
 //将要展开

@@ -43,6 +43,11 @@
     return self.datas[index];
 }
 
+- (BOOL)combox:(CGComBoxView *)combox willSelectRowAtIndex:(NSInteger)index
+{
+    return NO;
+}
+
 - (BOOL (^)(NSInteger))combox:(CGComBoxView *)combox searchText:(NSString *)searchText
 {
     return NULL;

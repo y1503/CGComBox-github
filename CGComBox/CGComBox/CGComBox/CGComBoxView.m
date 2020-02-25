@@ -325,6 +325,9 @@ static NSString *cellIndentifier = @"cellIndentifier";
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
+    if ([self.delegate respondsToSelector:@selector(combox:willSelectRowAtIndex:)] && ![self.delegate combox:self willSelectRowAtIndex:indexPath.row]) {
+        return;
+    }
     self.currentIndex = indexPath.row;
     if ([self.delegate respondsToSelector:@selector(combox:didSelectRowAtIndex:)]) {
         NSInteger index = indexPath.row;
