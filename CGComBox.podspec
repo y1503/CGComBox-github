@@ -3,7 +3,7 @@
 Pod::Spec.new do |s|
 
   s.name         = "CGComBox"
-  s.version      = "1.3.6"
+  s.version      = "1.3.5"
   s.ios.deployment_target = '8.0'
   s.summary            = "一个下拉多选的自定义控件CGComBox"
   s.homepage           = "https://github.com/y1503/CGComBox-github"

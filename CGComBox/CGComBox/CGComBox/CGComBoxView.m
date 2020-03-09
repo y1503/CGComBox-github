@@ -188,7 +188,7 @@ static NSString *cellIndentifier = @"cellIndentifier";
         }else if (self.isTouchOutsideHide && [self rows]) {
             [_supView addSubview:self.coverView];
         }
-        _arrow.transform = CGAffineTransformRotate(_arrow.transform, DEGREES_TO_RADIANS(180));
+        
         [_supView addSubview:_listTable];
         [_supView bringSubviewToFront:_listTable];//避免被其他子视图遮盖住
         
