@@ -304,6 +304,9 @@ static NSString *cellIndentifier = @"cellIndentifier";
     CGComBoxTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellIndentifier forIndexPath:indexPath];
     
     cell.textLabel.textAlignment = self.textField.textAlignment;
+        if (self.textField.textAlignment != NSTextAlignmentLeft && self.textField.textAlignment !=_cellTextAlignment) {
+        cell.textLabel.textAlignment =_cellTextAlignment;
+    }
     cell.textLabel.font = self.textField.font;
     cell.textLabel.textColor = self.textField.textColor;//kTextColor;
     cell.borderColor = self.borderColor;
