@@ -152,23 +152,26 @@ static NSString *cellIndentifier = @"cellIndentifier";
         _isOpen = NO;
         self.coverView.hidden = YES;
         [_textField resignFirstResponder];
+        __weak typeof(self) weakSelf = self;
         [UIView animateWithDuration:0.3 animations:^{
-            CGRect rect = _listTable.frame;
+            __strong typeof(weakSelf) strongSelf = weakSelf;
+            CGRect rect = strongSelf.listTable.frame;
             if (self.isDown) {
                 rect.size.height = 0;
             }else{
                 rect.origin.y += rect.size.height;
                 rect.size.height = 0;
             }
-            _listTable.frame =  rect;
+            strongSelf.listTable.frame =  rect;
         } completion:^(BOOL finished){
-            [_listTable removeFromSuperview];//移除
+            __strong typeof(weakSelf) strongSelf = weakSelf;
+            [strongSelf.listTable removeFromSuperview];//移除
             
             CGFloat rotate = 180;
-            if (_isDown == NO) {
+            if (strongSelf.isDown == NO) {
                 rotate = -180;
             }
-            _arrow.transform = CGAffineTransformRotate(_arrow.transform, DEGREES_TO_RADIANS(rotate));
+            strongSelf.arrow.transform = CGAffineTransformRotate(strongSelf.arrow.transform, DEGREES_TO_RADIANS(rotate));
             
         }];
     }
@@ -208,36 +211,36 @@ static NSString *cellIndentifier = @"cellIndentifier";
     }else{//up
         _listTable.frame =  CGRectMake(rect.origin.x, rect.origin.y, rect.size.width, 0);
     }
-    
+    __weak typeof(self) weakSelf = self;
     [UIView animateWithDuration:0.3 animations:^{
-        
-        CGFloat tableHeight = [self rows] * rect.size.height;
-        if (self.isDown) {//down
-            CGFloat height = _supView.frame.size.height - rect.origin.y - rect.size.height;
+        __strong typeof(weakSelf) strongSelf = weakSelf;
+        CGFloat tableHeight = [strongSelf rows] * rect.size.height;
+        if (strongSelf.isDown) {//down
+            CGFloat height = strongSelf.supView.frame.size.height - rect.origin.y - rect.size.height;
             if (tableHeight > height) {
                 tableHeight = height;
             }
             
-            _listTable.frame =  CGRectMake(rect.origin.x, rect.origin.y + rect.size.height, rect.size.width, tableHeight);
+            strongSelf.listTable.frame =  CGRectMake(rect.origin.x, rect.origin.y + rect.size.height, rect.size.width, tableHeight);
             
         }else{//up
             CGFloat height = rect.origin.y;
             if (tableHeight > height) {
                 tableHeight = height;
             }
-            _listTable.frame =  CGRectMake(rect.origin.x, rect.origin.y - tableHeight, rect.size.width, tableHeight);
+            strongSelf.listTable.frame =  CGRectMake(rect.origin.x, rect.origin.y - tableHeight, rect.size.width, tableHeight);
         }
         
         
     } completion:^(BOOL finished){
-        
+        __strong typeof(weakSelf) strongSelf = weakSelf;
         CGFloat rotate = 180;
-        if (_isDown == NO) {
+        if (strongSelf.isDown == NO) {
             rotate = -180;
         }
-        _arrow.transform = CGAffineTransformRotate(_arrow.transform, DEGREES_TO_RADIANS(rotate));
+        strongSelf.arrow.transform = CGAffineTransformRotate(strongSelf.arrow.transform, DEGREES_TO_RADIANS(rotate));
     }];
-    [_listTable reloadData];
+    [self.listTable reloadData];
 }
 
 
@@ -304,7 +307,7 @@ static NSString *cellIndentifier = @"cellIndentifier";
     CGComBoxTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellIndentifier forIndexPath:indexPath];
     
     cell.textLabel.textAlignment = self.textField.textAlignment;
-        if (self.textField.textAlignment != NSTextAlignmentLeft && self.textField.textAlignment !=_cellTextAlignment) {
+    if (self.textField.textAlignment != NSTextAlignmentLeft && self.textField.textAlignment !=_cellTextAlignment) {
         cell.textLabel.textAlignment =_cellTextAlignment;
     }
     cell.textLabel.font = self.textField.font;
