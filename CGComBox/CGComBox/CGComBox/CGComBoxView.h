@@ -25,6 +25,7 @@
 @interface CGComBoxView : UIView
 
 @property (nonatomic, strong) UITextField *textField;
+@property (nonatomic, assign) NSTextAlignment cellTextAlignment;
 @property (nonatomic,strong,readonly) UIImageView *arrow;
 @property (nonatomic,weak) UIView *supView;
 
