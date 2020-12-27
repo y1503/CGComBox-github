@@ -79,13 +79,22 @@
 // 自绘分割线
 - (void)drawRect:(CGRect)rect
 {
-    CGContextRef context = UIGraphicsGetCurrentContext();
-    
-    CGContextSetFillColorWithColor(context, [UIColor clearColor].CGColor);
-    CGContextFillRect(context, rect);
-    
-    CGContextSetStrokeColorWithColor(context, self.borderColor.CGColor);
-    CGContextStrokeRect(context, CGRectMake(0, rect.size.height - 0.1, rect.size.width, 0.1));
+    CGFloat dx = 0;
+    CGFloat lineWidth = 1/UIScreen.mainScreen.scale;
+    UIColor *color =  [UIColor colorWithRed:0xcc/255.0f green:0xcc/255.0f blue:0xcc/255.0f alpha:1];
+    // 线的路径
+    UIBezierPath *linePath = [UIBezierPath bezierPath];
+    // 起点
+    [linePath moveToPoint:CGPointMake(dx, rect.size.height-lineWidth)];
+    // 终点
+    [linePath addLineToPoint:CGPointMake(rect.size.width, rect.size.height-lineWidth)];
+    CAShapeLayer *lineLayer = [CAShapeLayer layer];
+
+    lineLayer.lineWidth = lineWidth;
+    lineLayer.strokeColor = color.CGColor;
+    lineLayer.path = linePath.CGPath;
+    lineLayer.fillColor = nil; // 默认为blackColor
+    [self.contentView.layer addSublayer:lineLayer];
 }
 
 @end
