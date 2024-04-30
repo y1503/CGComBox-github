@@ -62,7 +62,13 @@ static NSString *cellIndentifier = @"cellIndentifier";
     [_btn addSubview:_textField];
     
     _arrow = [[UIImageView alloc] init];
-    _arrow.image = [UIImage imageNamed:@"xiala_big.png"];
+    NSBundle *bundle = [self getBundle];
+    if (@available(iOS 13.0, *)) {
+        _arrow.image = [UIImage imageNamed:@"xiala_big.png" inBundle:bundle withConfiguration:nil];
+    } else {
+        _arrow.image = [UIImage imageNamed:@"xiala_big.png" inBundle:bundle compatibleWithTraitCollection:nil];
+        
+    }
     [_btn addSubview:_arrow];
     
     [_textField mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -524,6 +530,17 @@ static NSString *cellIndentifier = @"cellIndentifier";
 - (void)dealloc
 {
     [[NSNotificationCenter defaultCenter] removeObserver:self name:CGComBoxView_Notification object:nil];
+}
+
+- (NSBundle *)getBundle{
+    NSBundle *bundle = [NSBundle bundleForClass:self.class];
+    if (!bundle) { bundle = [NSBundle mainBundle]; } // main bundle
+    NSString *path = [bundle pathForResource:@"CGComBoxBundle" ofType:@"bundle"];
+    NSBundle *result = [NSBundle bundleWithPath:path];
+    if (!result) {
+        result = [NSBundle mainBundle];
+    }
+    return result;
 }
 
 @end

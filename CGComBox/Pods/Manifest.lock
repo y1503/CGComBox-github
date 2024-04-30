@@ -1,16 +1,23 @@
 PODS:
+  - CGComBox (1.3.9):
+    - Masonry
   - Masonry (1.1.0)
 
 DEPENDENCIES:
-  - Masonry
+  - CGComBox (from `../`)
 
 SPEC REPOS:
-  trunk:
+  https://github.com/CocoaPods/Specs.git:
     - Masonry
 
+EXTERNAL SOURCES:
+  CGComBox:
+    :path: "../"
+
 SPEC CHECKSUMS:
+  CGComBox: 77859bbc83bc81598c954f66416dfeae231952ed
   Masonry: 678fab65091a9290e40e2832a55e7ab731aad201
 
-PODFILE CHECKSUM: 9fd2788605a24e5fb91998677d16d76739d7aa29
+PODFILE CHECKSUM: 25710902db162d7e94e47fc5a04189aeeabcefa5
 
-COCOAPODS: 1.9.1
+COCOAPODS: 1.15.2

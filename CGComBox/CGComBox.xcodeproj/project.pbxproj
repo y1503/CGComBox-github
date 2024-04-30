@@ -10,6 +10,7 @@
 		12E8EBC7A4BDA81D4AECB976 /* libPods-CGComBoxTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 04958F7DC4681DE78F710835 /* libPods-CGComBoxTests.a */; };
 		4FE4BA03AA279833285BCF0C /* libPods-CGComBox.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 78CD865D2D078EA5A95AB068 /* libPods-CGComBox.a */; };
 		A1129C3620CE78416F081DED /* libPods-CGComBoxUITests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 7EE1442EF91A35ED55E1AAC8 /* libPods-CGComBoxUITests.a */; };
+		D903402A2BE0D4E600E6D3D3 /* CGComBox.podspec in Resources */ = {isa = PBXBuildFile; fileRef = D90340292BE0D4E600E6D3D3 /* CGComBox.podspec */; };
 		D92059A91EC843D30041F250 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = D92059A81EC843D30041F250 /* main.m */; };
 		D92059AC1EC843D30041F250 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = D92059AB1EC843D30041F250 /* AppDelegate.m */; };
 		D92059AF1EC843D30041F250 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D92059AE1EC843D30041F250 /* ViewController.m */; };
@@ -18,9 +19,6 @@
 		D92059B71EC843D30041F250 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D92059B51EC843D30041F250 /* LaunchScreen.storyboard */; };
 		D92059C21EC843D30041F250 /* CGComBoxTests.m in Sources */ = {isa = PBXBuildFile; fileRef = D92059C11EC843D30041F250 /* CGComBoxTests.m */; };
 		D92059CD1EC843D30041F250 /* CGComBoxUITests.m in Sources */ = {isa = PBXBuildFile; fileRef = D92059CC1EC843D30041F250 /* CGComBoxUITests.m */; };
-		D9A4492D1FA72054004F1426 /* CGComBoxTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = D9A4492C1FA72054004F1426 /* CGComBoxTableViewCell.m */; };
-		D9E46DA21F5FEBBB002F52F7 /* CGComBoxView.m in Sources */ = {isa = PBXBuildFile; fileRef = D9E46DA01F5FEBBB002F52F7 /* CGComBoxView.m */; };
-		D9E46DA31F5FEBBB002F52F7 /* xiala_big.png in Resources */ = {isa = PBXBuildFile; fileRef = D9E46DA11F5FEBBB002F52F7 /* xiala_big.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -50,6 +48,7 @@
 		7895A2AB9817CC24CE6B995B /* Pods-CGComBox.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CGComBox.release.xcconfig"; path = "Pods/Target Support Files/Pods-CGComBox/Pods-CGComBox.release.xcconfig"; sourceTree = "<group>"; };
 		78CD865D2D078EA5A95AB068 /* libPods-CGComBox.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-CGComBox.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		7EE1442EF91A35ED55E1AAC8 /* libPods-CGComBoxUITests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-CGComBoxUITests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		D90340292BE0D4E600E6D3D3 /* CGComBox.podspec */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = CGComBox.podspec; path = ../../CGComBox.podspec; sourceTree = "<group>"; };
 		D92059A41EC843D30041F250 /* CGComBox.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CGComBox.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		D92059A81EC843D30041F250 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		D92059AA1EC843D30041F250 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -66,11 +65,6 @@
 		D92059C81EC843D30041F250 /* CGComBoxUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = CGComBoxUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		D92059CC1EC843D30041F250 /* CGComBoxUITests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CGComBoxUITests.m; sourceTree = "<group>"; };
 		D92059CE1EC843D30041F250 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		D9A4492B1FA72054004F1426 /* CGComBoxTableViewCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CGComBoxTableViewCell.h; sourceTree = "<group>"; };
-		D9A4492C1FA72054004F1426 /* CGComBoxTableViewCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CGComBoxTableViewCell.m; sourceTree = "<group>"; };
-		D9E46D9F1F5FEBBB002F52F7 /* CGComBoxView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CGComBoxView.h; sourceTree = "<group>"; };
-		D9E46DA01F5FEBBB002F52F7 /* CGComBoxView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CGComBoxView.m; sourceTree = "<group>"; };
-		D9E46DA11F5FEBBB002F52F7 /* xiala_big.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = xiala_big.png; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -149,7 +143,7 @@
 		D92059A61EC843D30041F250 /* CGComBox */ = {
 			isa = PBXGroup;
 			children = (
-				D9E46D9E1F5FEBBB002F52F7 /* CGComBox */,
+				D90340292BE0D4E600E6D3D3 /* CGComBox.podspec */,
 				D92059AA1EC843D30041F250 /* AppDelegate.h */,
 				D92059AB1EC843D30041F250 /* AppDelegate.m */,
 				D92059AD1EC843D30041F250 /* ViewController.h */,
@@ -189,18 +183,6 @@
 			path = CGComBoxUITests;
 			sourceTree = "<group>";
 		};
-		D9E46D9E1F5FEBBB002F52F7 /* CGComBox */ = {
-			isa = PBXGroup;
-			children = (
-				D9E46D9F1F5FEBBB002F52F7 /* CGComBoxView.h */,
-				D9E46DA01F5FEBBB002F52F7 /* CGComBoxView.m */,
-				D9E46DA11F5FEBBB002F52F7 /* xiala_big.png */,
-				D9A4492B1FA72054004F1426 /* CGComBoxTableViewCell.h */,
-				D9A4492C1FA72054004F1426 /* CGComBoxTableViewCell.m */,
-			);
-			path = CGComBox;
-			sourceTree = "<group>";
-		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -212,6 +194,7 @@
 				D92059A01EC843D20041F250 /* Sources */,
 				D92059A11EC843D20041F250 /* Frameworks */,
 				D92059A21EC843D20041F250 /* Resources */,
+				552600D8AF634130971489C1 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -293,6 +276,7 @@
 			developmentRegion = English;
 			hasScannedForEncodings = 0;
 			knownRegions = (
+				English,
 				en,
 				Base,
 			);
@@ -313,9 +297,9 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				D9E46DA31F5FEBBB002F52F7 /* xiala_big.png in Resources */,
 				D92059B71EC843D30041F250 /* LaunchScreen.storyboard in Resources */,
 				D92059B41EC843D30041F250 /* Assets.xcassets in Resources */,
+				D903402A2BE0D4E600E6D3D3 /* CGComBox.podspec in Resources */,
 				D92059B21EC843D30041F250 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -337,6 +321,24 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
+		552600D8AF634130971489C1 /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-CGComBox/Pods-CGComBox-resources.sh",
+				"${PODS_CONFIGURATION_BUILD_DIR}/CGComBox/CGComBoxBundle.bundle",
+			);
+			name = "[CP] Copy Pods Resources";
+			outputPaths = (
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/CGComBoxBundle.bundle",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-CGComBox/Pods-CGComBox-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
 		C50D06FA991CB5CC30F48FFD /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -399,9 +401,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				D92059AF1EC843D30041F250 /* ViewController.m in Sources */,
-				D9A4492D1FA72054004F1426 /* CGComBoxTableViewCell.m in Sources */,
 				D92059AC1EC843D30041F250 /* AppDelegate.m in Sources */,
-				D9E46DA21F5FEBBB002F52F7 /* CGComBoxView.m in Sources */,
 				D92059A91EC843D30041F250 /* main.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -554,7 +554,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				DEVELOPMENT_TEAM = 9Q47E7XMRA;
 				INFOPLIST_FILE = CGComBox/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 11;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.zto.ztoExpress.CGComBox;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -568,7 +568,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				DEVELOPMENT_TEAM = 9Q47E7XMRA;
 				INFOPLIST_FILE = CGComBox/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 11;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.zto.ztoExpress.CGComBox;
 				PRODUCT_NAME = "$(TARGET_NAME)";
