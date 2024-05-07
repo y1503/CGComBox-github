@@ -20,7 +20,7 @@ install_framework()
 
   if [ -L "${source}" ]; then
       echo "Symlinked..."
-      source="$(readlink "${source}")"
+      source="$(readlink -f "${source}")"
   fi
 
   # use filter instead of exclude so missing patterns dont' throw errors

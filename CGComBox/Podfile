@@ -3,6 +3,32 @@ source 'https://github.com/CocoaPods/Specs.git'
 
  platform :ios, '11.0'
 
+
+#处理xcode14编译报错的问题
+post_install do |installer|
+  installer.pods_project.targets.each do |target|
+      target.build_configurations.each do |config|
+          config.build_settings['CODE_SIGN_IDENTITY'] = ''
+          config.build_settings['IPHONEOS_DEPLOYMENT_TARGET'] = '11.0'
+          if config.base_configuration_reference.is_a? Xcodeproj::Project::Object::PBXFileReference
+                  xcconfig_path = config.base_configuration_reference.real_path
+                  IO.write(xcconfig_path, IO.read(xcconfig_path).gsub("DT_TOOLCHAIN_DIR", "TOOLCHAIN_DIR"))
+          end
+      end
+      
+      shell_script_path = "Pods/Target Support Files/#{target.name}/#{target.name}-frameworks.sh"
+      if File::exists?(shell_script_path)
+        shell_script_input_lines = File.readlines(shell_script_path)
+        shell_script_output_lines = shell_script_input_lines.map { |line| line.sub("source=\"$(readlink \"${source}\")\"", "source=\"$(readlink -f \"${source}\")\"") }
+        File.open(shell_script_path, 'w') do |f|
+          shell_script_output_lines.each do |line|
+            f.write line
+          end
+        end
+      end
+  end
+end
+
 target 'CGComBox' do
   # Uncomment the next line if you're using Swift or would like to use dynamic frameworks
   # use_frameworks!
